@@ -1,5 +1,6 @@
 package com.walkary.models.entity;
 
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -8,12 +9,13 @@ import javax.persistence.*;
 import java.sql.Timestamp;
 
 @Entity
+@Getter
 @NoArgsConstructor
-public class User {
+public class UserEntity {
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
-    private Long id;
+    private String id;
 
     @Column
     private String password;
