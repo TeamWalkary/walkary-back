@@ -26,7 +26,7 @@ jobs:
         with:
           images: ${{ secrets.DOCKER_HUB_NAME }}/walkary-server
           flavor: |
-            latest=auto
+            latest=true
           tags: |
             type=ref,event=branch
             type=ref,event=pr
