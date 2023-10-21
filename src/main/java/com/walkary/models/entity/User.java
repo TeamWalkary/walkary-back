@@ -1,5 +1,6 @@
 package com.walkary.models.entity;
 
+import lombok.Builder;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -27,4 +28,10 @@ public class User {
     @Column
     @UpdateTimestamp
     private Timestamp updatedAt;
+
+    @Builder
+    public User(String password, String nickname) {
+        this.password = password;
+        this.nickname = nickname;
+    }
 }
