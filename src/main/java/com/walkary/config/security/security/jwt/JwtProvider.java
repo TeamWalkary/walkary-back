@@ -19,7 +19,7 @@ import java.util.stream.Collectors;
 @Component
 public class JwtProvider {
 
-    private static final String SECRET = "korpaySecretKey";
+    private static final String SECRET = "walkarySecretKey";
     private static final String AUTH_KEY = "auth";
     private static final long JWT_EXPIRE_MS = 3600000; // 2시간
 

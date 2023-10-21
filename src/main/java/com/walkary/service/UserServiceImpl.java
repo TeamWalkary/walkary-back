@@ -6,7 +6,6 @@ import com.walkary.models.dto.UserDto;
 import com.walkary.models.entity.UserEntity;
 import com.walkary.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.log4j.Log4j2;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -15,7 +14,6 @@ import org.springframework.stereotype.Service;
 import java.util.Collection;
 import java.util.Collections;
 
-@Log4j2
 @Service
 @RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
