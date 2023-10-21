@@ -1,4 +1,4 @@
-package com.warkarly.warkarlyserver.service;
+package com.walkary.service;
 
 import org.springframework.stereotype.Service;
 

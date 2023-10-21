@@ -1,4 +1,4 @@
-package com.warkarly.warkarlyserver.controller;
+package com.walkary.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.RestController;

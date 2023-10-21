@@ -1,4 +1,4 @@
-package com.warkarly.warkarlyserver.models.entity;
+package com.walkary.models.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;

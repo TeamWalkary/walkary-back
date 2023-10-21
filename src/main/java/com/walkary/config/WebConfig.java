@@ -1,4 +1,4 @@
-package com.warkarly.warkarlyserver.config;
+package com.walkary.config;
 
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 

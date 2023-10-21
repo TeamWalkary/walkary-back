@@ -1,10 +1,10 @@
-package com.warkarly.warkarlyserver;
+package com.walkary;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class WarkarlyServerApplicationTests {
+class WalkaryApplicationTests {
 
 	@Test
 	void contextLoads() {

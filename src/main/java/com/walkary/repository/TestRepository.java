@@ -1,4 +1,4 @@
-package com.warkarly.warkarlyserver.repository;
+package com.walkary.repository;
 
 import org.springframework.stereotype.Repository;
 
