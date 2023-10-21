@@ -7,6 +7,7 @@ import org.springframework.data.geo.Point;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
+import java.time.LocalDate;
 
 @Entity
 @NoArgsConstructor
@@ -31,7 +32,7 @@ public class PointMap {
     @Column
     private String category;
     @Column
-    private Timestamp date;
+    private LocalDate date;
 
     @Column
     @CreationTimestamp

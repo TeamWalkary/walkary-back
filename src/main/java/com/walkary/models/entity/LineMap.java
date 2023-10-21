@@ -6,6 +6,7 @@ import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
+import java.time.LocalDate;
 
 @Entity
 @NoArgsConstructor
@@ -16,7 +17,7 @@ public class LineMap {
     private Long id;
 
     @Column
-    private Timestamp date;
+    private LocalDate date;
 
     @Column
     @CreationTimestamp

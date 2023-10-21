@@ -6,6 +6,7 @@ import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
+import java.time.LocalDate;
 
 @Entity
 @NoArgsConstructor
@@ -20,7 +21,7 @@ public class Diary {
     private User user;
 
     @Column
-    private Timestamp date;
+    private LocalDate date;
 
     @Column
     private String content;
