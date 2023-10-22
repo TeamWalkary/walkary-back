@@ -31,7 +31,7 @@ public class SecurityConfig {
                 .cors().configurationSource(corsConfigurationSource()).and()
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeRequests()
-                .antMatchers("/apis/login").permitAll()
+                .antMatchers("/apis/login", "/apis/signup").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .addFilterBefore(new JwtFilter(jwtProvider), UsernamePasswordAuthenticationFilter.class)

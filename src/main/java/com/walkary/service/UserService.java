@@ -6,4 +6,6 @@ import com.walkary.models.dto.UserDto;
 public interface UserService {
 
     JwtDto login(UserDto userDto);
+
+    String signup(UserDto userDto);
 }

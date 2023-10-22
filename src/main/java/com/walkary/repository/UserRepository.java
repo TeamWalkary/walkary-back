@@ -9,6 +9,6 @@ import java.util.Optional;
 @Repository
 public interface UserRepository extends CrudRepository<UserEntity, String> {
 
-    Optional<UserEntity> findByUserId(String userId);
+    Optional<UserEntity> findById(String id);
 
 }

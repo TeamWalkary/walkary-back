@@ -1,12 +1,12 @@
 package com.walkary.controller;
 
-import com.walkary.config.security.security.jwt.JwtDto;
 import com.walkary.models.dto.UserDto;
 import com.walkary.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -16,13 +16,20 @@ public class UserController {
 
     private final UserService userService;
 
-    @RequestMapping("/login")
-    public ResponseEntity<JwtDto> login(@RequestParam UserDto userDto) {
-        JwtDto jwt = userService.login(userDto);
-        return ResponseEntity
-                .ok()
-                .header("Authorization", "Bearer " + jwt.accessToken())
-                .build();
+    @PostMapping("/login")
+    public ResponseEntity<String> login(@RequestBody UserDto userDto) {
+        return ResponseEntity.ok()
+                .body("Bearer "+ userService.login(userDto).accessToken());
     }
+
+    @PostMapping("/signup")
+    public ResponseEntity<String> signup(@RequestBody UserDto userDto) {
+        String message = userService.signup(userDto);
+        return ResponseEntity
+                .ok(message);
+    }
+
+
+
 
 }

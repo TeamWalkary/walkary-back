@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -23,14 +24,32 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public JwtDto login(UserDto userDto) {
-        UserEntity userEntity = userRepository.findByUserId(userDto.userId()).orElseThrow(() ->
-                new UsernameNotFoundException("해당 사용자가 존재하지 않습니다. : " + userDto.userId()));
+        UserEntity userEntity = userRepository.findById(userDto.userId()).orElseThrow(() ->
+                new UsernameNotFoundException("잘못된 id 혹은 password 입니다."));
 
-        if(userDto.password().equals(userEntity.getId())) {
+        if(userDto.password().equals(userEntity.getPassword())) {
             Collection<SimpleGrantedAuthority> authorities = Collections.singletonList(new SimpleGrantedAuthority("ROLE_USER"));
             User user = new User(userDto.userId(), userDto.password(), authorities);
             return jwtProvider.generateToken(user);
+        } else {
+            throw new UsernameNotFoundException("잘못된 id 혹은 password 입니다.");
         }
-        return null;
+    }
+
+    @Override
+    public String signup(UserDto userDto) {
+        UserEntity user = UserEntity.builder()
+                .id(userDto.userId())
+                .password(userDto.password())
+                .nickname(userDto.username())
+                .build();
+
+        Optional<UserEntity> userEntity = userRepository.findById(user.getId());
+        if(userEntity.isPresent()) {
+            return "이미 존재하는 아이디입니다.";
+        } else {
+            userRepository.save(user);
+            return "회원가입이 완료되었습니다.";
+        }
     }
 }
