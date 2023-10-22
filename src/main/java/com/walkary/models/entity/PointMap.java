@@ -25,8 +25,9 @@ public class PointMap {
     @Column
     private Point point;
 
-    @Column
-    private Long userId;
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
     @Column
     private String content;
     @Column

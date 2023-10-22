@@ -2,9 +2,11 @@ package com.walkary.models.dto.response;
 
 import com.walkary.models.entity.Diary;
 import lombok.Builder;
+import lombok.Getter;
 
 import java.time.LocalDate;
 
+@Getter
 public class DiaryResponse {
     private final Long id;
     private final LocalDate date;

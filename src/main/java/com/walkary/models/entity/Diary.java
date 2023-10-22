@@ -1,6 +1,7 @@
 package com.walkary.models.entity;
 
 import com.walkary.models.dto.request.DiaryEdit;
+import com.walkary.models.dto.request.DiaryEditor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -44,13 +45,13 @@ public class Diary {
         this.content = content;
     }
 
-    public DiaryEdit.DiaryEditBuilder toEditor() {
-        return DiaryEdit.builder()
+    public DiaryEditor.DiaryEditorBuilder toEditor() {
+        return DiaryEditor.builder()
                 .date(date)
                 .content(content);
     }
 
-    public void edit(DiaryEdit diaryEditor) {
+    public void edit(DiaryEditor diaryEditor) {
         date = diaryEditor.getDate();
         content = diaryEditor.getContent();
     }

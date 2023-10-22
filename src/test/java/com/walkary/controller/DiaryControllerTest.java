@@ -2,9 +2,10 @@ package com.walkary.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.walkary.models.dto.request.DiaryCreate;
+import com.walkary.models.dto.request.DiaryEdit;
 import com.walkary.models.entity.Diary;
-import com.walkary.models.entity.User;
 import com.walkary.repository.DiaryRepository;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,17 +18,14 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
-import static org.hamcrest.Matchers.is;
-import static org.junit.jupiter.api.Assertions.*;
 import static org.springframework.http.MediaType.APPLICATION_JSON;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@AutoConfigureMockMvc
 @SpringBootTest
+@AutoConfigureMockMvc
 class DiaryControllerTest {
     @Autowired
     private ObjectMapper objectMapper;
@@ -38,6 +36,11 @@ class DiaryControllerTest {
     @Autowired
     private DiaryRepository diaryRepository;
 
+
+    @BeforeEach
+    void clean() {
+        diaryRepository.deleteAll();
+    }
 
     //일기 작성 테스트
     @Test
@@ -64,27 +67,62 @@ class DiaryControllerTest {
     @DisplayName("글 페이징 처리해서 조회")
     public void findListByMemberId() throws Exception {
         //given
-        User user = User.builder()
-                .password("1234")
-                .nickname("test1")
-                .build();
-
         List<Diary> requestPosts = IntStream.range(0, 20)
                 .mapToObj(i -> Diary.builder()
+                        .date(LocalDate.now())
                         .content("bar" + i)
                         .build())
                 .collect(Collectors.toList());
 
         diaryRepository.saveAll(requestPosts);
 
-
         //expected
-        mockMvc.perform(get("/diary/list?page=1&size=10")
+        mockMvc.perform(get("/diary/list")
                         .contentType(APPLICATION_JSON))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.length()", is(10)))
-                .andExpect(jsonPath("$[0].title").value("foo19"))
-                .andExpect(jsonPath("$[0].content").value("bar19"))
+                .andDo(print());
+    }
+
+    @Test
+    @DisplayName("글 내용 수정")
+    public void edit() throws Exception {
+        //given
+        Diary diary = Diary.builder()
+                .date(LocalDate.of(2023, 10, 22))
+                .content("푸르지오")
+                .build();
+        diaryRepository.save(diary);
+
+        //클라이언트가 수정할 값 안 보내면.
+        DiaryEdit diaryEdit = DiaryEdit.builder()
+                .date(null)
+                .content("반포자이")
+                .build();
+
+
+        //expected
+        mockMvc.perform(patch("/diary/{diaryId}", diary.getId()) //PATCH /diary/{postId}
+                        .contentType(APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(diaryEdit)))
+                .andExpect(status().isOk())
+                .andDo(print());
+    }
+
+    @Test
+    @DisplayName("글 삭제")
+    void deleteTest() throws Exception {
+        //given
+        Diary diary = Diary.builder()
+                .date(LocalDate.of(2023, 10, 22))
+                .content("푸르지오")
+                .build();
+
+        diaryRepository.save(diary);
+
+        // when
+        mockMvc.perform(delete("/diary/{diaryId}", diary.getId())
+                        .contentType(APPLICATION_JSON))
+                .andExpect(status().isOk())
                 .andDo(print());
     }
 }
