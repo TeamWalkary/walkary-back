@@ -5,5 +5,4 @@ public record PinResponse(
         String contents,
         Double latitude,
         Double longitude
-) {
-}
+) { }

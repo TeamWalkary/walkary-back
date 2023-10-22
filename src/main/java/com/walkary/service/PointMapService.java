@@ -1,6 +1,7 @@
 package com.walkary.service;
 
 import com.walkary.models.SortType;
+import com.walkary.models.dto.MainPinsResponse;
 import com.walkary.models.dto.PinResponse;
 import com.walkary.models.entity.PointMap;
 import com.walkary.models.entity.UserEntity;
