@@ -1,7 +1,6 @@
 package com.walkary.service;
 
 import com.walkary.models.SortType;
-import com.walkary.models.dto.MainPinsResponse;
 import com.walkary.models.dto.PinResponse;
 import com.walkary.models.entity.PointMap;
 import com.walkary.models.entity.UserEntity;
@@ -15,6 +14,7 @@ import org.springframework.stereotype.Service;
 import java.sql.Timestamp;
 import java.time.Instant;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -49,11 +49,12 @@ public class PointMapService {
             case OLDEST -> Sort.Direction.DESC;
         };
         return repository.findAllByUserIdAndDate(userId, parsedDate, Sort.by(direction, "id")).stream().map(point ->
-                new PinResponse(
+                    new PinResponse(
                         point.getId(),
                         point.getContent(),
                         point.getPoint().getX(),
-                        point.getPoint().getY()
+                        point.getPoint().getY(),
+                        point.getCreatedAt().toLocalDateTime().toLocalTime().format(DateTimeFormatter.ofPattern("HH:mm"))
                 )
         ).collect(Collectors.toList());
     }
