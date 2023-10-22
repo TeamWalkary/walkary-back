@@ -28,7 +28,7 @@ public class PointMapService {
 
     public void create(final String userId, final String content, final Point point) {
         final UserEntity user = userRepository.findById(userId).orElseThrow(
-                IllegalArgumentException::new
+                () ->  new IllegalArgumentException("잘못된 userId입니다 다시 확인해주세요.")
         );
         final Timestamp now = Timestamp.from(Instant.now());
         final PointMap pointMap = PointMap.builder()
