@@ -31,7 +31,7 @@ public class JwtProvider {
                 .map(GrantedAuthority::getAuthority)
                 .collect(Collectors.joining(","));
 
-        String accessToken = createToken(authorities, user.getUsername(), JWT_EXPIRE_MS);
+        String accessToken = "Bearer "+createToken(authorities, user.getUsername(), JWT_EXPIRE_MS);
 
         return new JwtDto(accessToken);
     }
