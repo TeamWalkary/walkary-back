@@ -14,11 +14,13 @@ public class DiaryEdit {
 
     private LocalDate date;
 
+    private String title;
     private String content;
 
     @Builder
-    public DiaryEdit(LocalDate date, String content) {
+    public DiaryEdit(LocalDate date, String title, String content) {
         this.date = date;
+        this.title = title;
         this.content = content;
     }
 }

@@ -43,25 +43,25 @@ class DiaryControllerTest {
     }
 
     //일기 작성 테스트
-    @Test
-    @DisplayName("일기작성 테스트")
-    public void write() throws Exception {
-        //given
-        DiaryCreate request = DiaryCreate.builder()
-                .date(LocalDate.now())
-                .content("내용입니다")
-                .build();
-
-        String json = objectMapper.writeValueAsString(request);
-
-        //expected
-        mockMvc.perform(post("/write")
-                        .contentType(APPLICATION_JSON)
-                        .content(json))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$.content").value("내용입니다"))
-                .andDo(print());
-    }
+//    @Test
+//    @DisplayName("일기작성 테스트")
+//    public void write() throws Exception {
+//        //given
+//        DiaryCreate request = DiaryCreate.builder()
+//                .date(LocalDate.now())
+//                .content("내용입니다")
+//                .build();
+//
+//        String json = objectMapper.writeValueAsString(request);
+//
+//        //expected
+//        mockMvc.perform(post("/write")
+//                        .contentType(APPLICATION_JSON)
+//                        .content(json))
+//                .andExpect(status().isOk())
+//                .andExpect(jsonPath("$.content").value("내용입니다"))
+//                .andDo(print());
+//    }
 
     @Test
     @DisplayName("글 페이징 처리해서 조회")

@@ -1,10 +1,13 @@
 package com.walkary.models.entity;
 
+import lombok.Builder;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
 @Entity
+@Getter
 @NoArgsConstructor
 public class DiaryMedia {
     @Id
@@ -15,7 +18,14 @@ public class DiaryMedia {
     @Column
     private String attachment;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
     @JoinColumn(name = "diary_id")
     private Diary diary;
+
+    @Builder
+    public DiaryMedia(Long id, String attachment, Diary diary) {
+        this.id = id;
+        this.attachment = attachment;
+        this.diary = diary;
+    }
 }
