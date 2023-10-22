@@ -94,6 +94,7 @@ public class DiaryService {
         DiaryMedia diaryMedia = diaryMediaRepository.findByDiaryId(diary.getId()).orElse(null);
 
         return DiaryResponse.builder()
+                .id(diary.getId())
                 .title(diary.getTitle())
                 .content(diary.getContent())
                 .image(diaryMedia != null ? diaryMedia.getAttachment() : null)
