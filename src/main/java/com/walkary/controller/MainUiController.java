@@ -5,6 +5,7 @@ import com.walkary.models.SortType;
 import com.walkary.models.dto.MainPinsResponse;
 import com.walkary.service.PointMapService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -29,14 +30,14 @@ public class MainUiController {
     @PreAuthorize("hasRole(ROLE_USER)")
     public ResponseEntity<MainPinsResponse> getMapPins(
             HttpServletRequest httpRequest,
-            @RequestParam(value = "date", required = false) String date,
+            @RequestParam(value = "date", required = false) @DateTimeFormat(pattern = "yyyyMMdd") LocalDate date,
             @RequestParam(value = "sortBy", defaultValue = "OLDEST") SortType sortType
     ) {
         final String userId = JwtProvider.extractUserId(httpRequest);
         try {
-            final LocalDate parsedDate = (date != null) ? LocalDate.parse(date, DateTimeFormatter.ofPattern("yyyyMMdd")) : LocalDate.now();
+            date = (date != null) ? date : LocalDate.now();
             return ResponseEntity.ok(
-                    new MainPinsResponse(pointMapService.getMapList(userId, parsedDate, sortType))
+                    new MainPinsResponse(pointMapService.getMapList(userId, date, sortType))
             );
         } catch (DateTimeException e) {
             throw new IllegalArgumentException("잘못된 날짜형식입니다");
