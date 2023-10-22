@@ -1,5 +1,6 @@
 package com.walkary.models.entity;
 
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -7,7 +8,10 @@ import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
 import java.sql.Timestamp;
 
 @Entity
@@ -34,4 +38,10 @@ public class UserEntity {
     @Column
     @UpdateTimestamp
     private Timestamp updatedAt;
+
+    @Builder
+    public UserEntity(String password, String nickname) {
+        this.password = password;
+        this.nickname = nickname;
+    }
 }

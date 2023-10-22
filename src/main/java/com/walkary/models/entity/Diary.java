@@ -1,5 +1,9 @@
 package com.walkary.models.entity;
 
+import com.walkary.models.dto.request.DiaryEditor;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -10,6 +14,9 @@ import java.time.LocalDate;
 
 @Entity
 @NoArgsConstructor
+@Getter
+@AllArgsConstructor
+@Builder
 public class Diary {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
@@ -24,6 +31,9 @@ public class Diary {
     private LocalDate date;
 
     @Column
+    private String title;
+
+    @Column
     private String content;
 
     @Column
@@ -33,4 +43,24 @@ public class Diary {
     @Column
     @UpdateTimestamp
     private Timestamp updatedAt;
+
+    public Diary(LocalDate date, String title, String content, UserEntity user) {
+        this.date = date;
+        this.title = title;
+        this.content = content;
+        this.user = user;
+    }
+
+    public DiaryEditor.DiaryEditorBuilder toEditor() {
+        return DiaryEditor.builder()
+                .date(date)
+                .title(title)
+                .content(content);
+    }
+
+    public void edit(DiaryEditor diaryEditor) {
+        date = diaryEditor.getDate();
+        title = diaryEditor.getTitle();
+        content = diaryEditor.getContent();
+    }
 }

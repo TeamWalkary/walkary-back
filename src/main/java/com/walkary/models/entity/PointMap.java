@@ -30,6 +30,7 @@ public class PointMap {
     @ManyToOne
     @JoinColumn(name = "user_id")
     private UserEntity user;
+
     @Column
     private String content;
     @Column
