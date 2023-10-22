@@ -34,7 +34,7 @@ public class MainUiController {
     ) {
         final String userId = JwtProvider.extractUserId(httpRequest);
         try {
-            final LocalDate parsedDate = LocalDate.parse(date, DateTimeFormatter.ofPattern("yyyyMMdd"));
+            final LocalDate parsedDate = (date != null) ? LocalDate.parse(date, DateTimeFormatter.ofPattern("yyyyMMdd")) : LocalDate.now();
             return ResponseEntity.ok(
                     new MainPinsResponse(pointMapService.getMapList(userId, parsedDate, sortType))
             );
