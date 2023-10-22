@@ -3,13 +3,16 @@ package com.walkary.config.security.security.jwt;
 
 import io.jsonwebtoken.*;
 import lombok.extern.log4j.Log4j2;
+import org.springframework.http.HttpHeaders;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Component;
+import org.springframework.util.StringUtils;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Date;
@@ -78,5 +81,23 @@ public class JwtProvider {
             log.info("JWT 토큰이 잘못되었습니다.");
         }
         return false;
+    }
+    public static String resolveToken(HttpServletRequest request) {
+        String bearerToken = request.getHeader(HttpHeaders.AUTHORIZATION);
+        if (StringUtils.hasText(bearerToken) && bearerToken.startsWith("Bearer ")) {
+            return bearerToken.substring(7);
+        }
+        return null;
+    }
+
+    public static String extractUserId(HttpServletRequest request) {
+        final String token = resolveToken(request);
+        Claims claims = Jwts
+                .parser()
+                .setSigningKey(SECRET.getBytes())
+                .parseClaimsJws(token)
+                .getBody();
+
+        return claims.getSubject();
     }
 }
