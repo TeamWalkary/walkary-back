@@ -1,5 +1,7 @@
 package com.walkary.controller;
 
+import com.walkary.config.security.security.jwt.JwtDto;
+import com.walkary.models.dto.MessageResponse;
 import com.walkary.models.dto.UserDto;
 import com.walkary.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -17,16 +19,16 @@ public class UserController {
     private final UserService userService;
 
     @PostMapping("/login")
-    public ResponseEntity<String> login(@RequestBody UserDto userDto) {
+    public ResponseEntity<JwtDto> login(@RequestBody UserDto userDto) {
         return ResponseEntity.ok()
-                .body("Bearer "+ userService.login(userDto).accessToken());
+                .body(userService.login(userDto));
     }
 
     @PostMapping("/signup")
-    public ResponseEntity<String> signup(@RequestBody UserDto userDto) {
+    public ResponseEntity<MessageResponse> signup(@RequestBody UserDto userDto) {
         String message = userService.signup(userDto);
         return ResponseEntity
-                .ok(message);
+                .ok(new MessageResponse(message));
     }
 
 
