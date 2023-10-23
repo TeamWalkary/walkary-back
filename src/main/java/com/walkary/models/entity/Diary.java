@@ -27,6 +27,9 @@ public class Diary {
     @JoinColumn(name = "user_id")
     private UserEntity user;
 
+    @OneToOne(mappedBy = "diary")
+    private DiaryMedia diaryMedia;
+
     @Column
     private LocalDate date;
 
