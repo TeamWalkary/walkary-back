@@ -3,10 +3,13 @@ package com.walkary.controller;
 import com.walkary.models.dto.MessageResponse;
 import com.walkary.models.dto.request.DiaryCreate;
 import com.walkary.models.dto.request.DiaryEdit;
+import com.walkary.models.dto.response.DiaryListResponse;
 import com.walkary.models.dto.response.DiaryResponse;
 import com.walkary.service.DiaryService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -14,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.time.LocalDate;
+import java.util.List;
 
 import static com.walkary.config.security.security.jwt.JwtProvider.extractUserId;
 
@@ -45,12 +49,23 @@ public class DiaryController {
     public ResponseEntity<DiaryResponse> findDiaryByDate(@RequestParam(name = "date", required = false) @DateTimeFormat(pattern = "yyyyMMdd") LocalDate date, HttpServletRequest request) {
         String userId = extractUserId(request);
         DiaryResponse diaryResponse = diaryService.findDiaryByDate(userId, date != null ? date : LocalDate.now());
-        System.out.println("diaryResponse = " + diaryResponse);
         try {
             return ResponseEntity.ok(diaryResponse);
         } catch (Exception e) {
-            log.info("error={}", e.getMessage());
             throw new IllegalArgumentException("일기를 조회할 수 없습니다.");
+        }
+    }
+
+    //일기 모아보기
+    @GetMapping("/collect/diary")
+    @PreAuthorize("hasRole(ROLE_USER)")
+    public ResponseEntity<List<DiaryListResponse>> findListByUserId(Pageable pageable, HttpServletRequest request) {
+        String userId = extractUserId(request);
+        List<DiaryListResponse> diaryList = diaryService.findListByUserId(pageable, userId);
+        try {
+            return ResponseEntity.ok(diaryList);
+        } catch (Exception e) {
+            throw new IllegalArgumentException("일기를 조회할 수 없습니다");
         }
     }
 

@@ -10,6 +10,10 @@ import javax.persistence.*;
 @Getter
 @NoArgsConstructor
 public class DiaryMedia {
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
+    @JoinColumn(name = "diary_id")
+    private Diary diary;
+
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     @Column(name = "id", nullable = false)
@@ -17,10 +21,6 @@ public class DiaryMedia {
 
     @Column
     private String attachment;
-
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
-    @JoinColumn(name = "diary_id")
-    private Diary diary;
 
     @Builder
     public DiaryMedia(Long id, String attachment, Diary diary) {

@@ -1,8 +1,10 @@
 package com.walkary.service;
 
+import com.walkary.models.dto.DiaryWithAttachmentDTO;
 import com.walkary.models.dto.request.DiaryCreate;
 import com.walkary.models.dto.request.DiaryEdit;
 import com.walkary.models.dto.request.DiaryEditor;
+import com.walkary.models.dto.response.DiaryListResponse;
 import com.walkary.models.dto.response.DiaryResponse;
 import com.walkary.models.entity.Diary;
 import com.walkary.models.entity.DiaryMedia;
@@ -12,6 +14,7 @@ import com.walkary.repository.DiaryRepository;
 import com.walkary.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -52,9 +55,20 @@ public class DiaryService {
     }
 
     //일기 모아보기
-    public List<DiaryResponse> findListByMemberId(Pageable pageable, Long userId) {
-        return diaryRepository.findListByMemberId(pageable, userId).stream()
-                .map(DiaryResponse::new)
+    @Transactional
+    public List<DiaryListResponse> findListByUserId(Pageable pageable, String userId) {
+        Page<DiaryWithAttachmentDTO> diaryPage = diaryRepository.findDiariesWithMediaByUserId(pageable, userId);
+
+        return diaryPage
+                .getContent()
+                .stream()
+                .map(diaryDto -> DiaryListResponse.builder()
+                        .id(diaryDto.getId())
+                        .date(diaryDto.getDate())
+                        .title(diaryDto.getTitle())
+                        .content(diaryDto.getContent())
+                        .image(diaryDto.getAttachment())
+                        .build())
                 .collect(Collectors.toList());
     }
 
