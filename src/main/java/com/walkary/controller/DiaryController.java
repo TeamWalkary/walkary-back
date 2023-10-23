@@ -8,8 +8,9 @@ import com.walkary.models.dto.response.DiaryResponse;
 import com.walkary.service.DiaryService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.web.PageableDefault;
+import org.springframework.data.domain.Sort;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -59,8 +60,19 @@ public class DiaryController {
     //일기 모아보기
     @GetMapping("/collect/diary")
     @PreAuthorize("hasRole(ROLE_USER)")
-    public ResponseEntity<List<DiaryListResponse>> findListByUserId(Pageable pageable, HttpServletRequest request) {
+    public ResponseEntity<List<DiaryListResponse>> findListByUserId(
+            @RequestParam(name = "limit") String limit,
+            @RequestParam(name = "offset") String offset,
+            @RequestParam(name = "sortBy") String sortBy,
+            HttpServletRequest request) {
+
         String userId = extractUserId(request);
+        int page = (offset != null) ? Integer.parseInt(offset) : 0;
+        int size = (limit !=null) ? Integer.parseInt(limit) : 5;
+
+        Sort sort = (sortBy.equals("latest")) ? Sort.by(Sort.Order.desc("id")) : Sort.by(Sort.Order.asc("id"));
+        Pageable pageable = PageRequest.of(page, size, sort);
+
         List<DiaryListResponse> diaryList = diaryService.findListByUserId(pageable, userId);
         try {
             return ResponseEntity.ok(diaryList);
