@@ -10,11 +10,13 @@ public class DiaryEditor {
     private LocalDate date;
     private String title;
     private String content;
+    private String image;
 
     @Builder
-    public DiaryEditor(LocalDate date, String title, String content) {
+    public DiaryEditor(LocalDate date, String title, String content, String image) {
         this.date = date;
         this.title = title;
         this.content = content;
+        this.image = image;
     }
 }

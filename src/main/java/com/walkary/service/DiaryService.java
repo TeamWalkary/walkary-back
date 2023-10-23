@@ -18,6 +18,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Slf4j
@@ -31,8 +32,8 @@ public class DiaryService {
 
     private final UserRepository userRepository;
 
-    @Transactional
     //일기 작성
+    @Transactional
     public void write(DiaryCreate diaryCreate) {
         UserEntity user = userRepository.findById(diaryCreate.getUserId()).orElseThrow(() -> new IllegalArgumentException("유저가 존재하지 않습니다"));
 
@@ -59,8 +60,9 @@ public class DiaryService {
     }
 
     @Transactional
-    public DiaryResponse edit(Long id, DiaryEdit diaryEdit) {
-        Diary diary = diaryRepository.findById(id)
+    public DiaryResponse edit(Long diaryId, DiaryEdit diaryEdit) {
+        //다이어리 정보 수정
+        Diary diary = diaryRepository.findById(diaryId)
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 글입니다"));
 
         DiaryEditor.DiaryEditorBuilder editBuilder = diary.toEditor();
@@ -77,9 +79,14 @@ public class DiaryService {
             editBuilder.content(diaryEdit.getContent());
         }
 
+        //사진 정보 가져오기
+        DiaryMedia diaryMedia = diaryMediaRepository.findByDiaryId(diaryId).orElse(null);
+        if (diaryEdit.getImage() != null){
+            diaryMedia.edit(diaryEdit.getImage());
+        }
         diary.edit(editBuilder.build());
 
-        return new DiaryResponse(diary);
+        return new DiaryResponse(diary, diaryEdit.getImage());
     }
 
     public List<DiaryResponse> getList(Pageable pageable) {

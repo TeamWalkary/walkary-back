@@ -56,6 +56,7 @@ public class Diary {
                 .date(date)
                 .title(title)
                 .content(content);
+
     }
 
     public void edit(DiaryEditor diaryEditor) {

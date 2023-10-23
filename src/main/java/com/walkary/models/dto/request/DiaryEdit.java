@@ -11,16 +11,16 @@ import java.time.LocalDate;
 @Setter
 @ToString
 public class DiaryEdit {
-
     private LocalDate date;
-
     private String title;
     private String content;
+    private String image;
 
     @Builder
-    public DiaryEdit(LocalDate date, String title, String content) {
+    public DiaryEdit(LocalDate date, String title, String content, String image) {
         this.date = date;
         this.title = title;
         this.content = content;
+        this.image = image;
     }
 }
