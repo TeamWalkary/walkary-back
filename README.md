@@ -70,6 +70,6 @@
 ## Walkary 제작자
 - 백엔드 : [경](https://github.com/woo-yu), [리히트](https://github.com/RE-Heat), [웹서퍼](https://github.com/meengi07)
 - 프론트엔드 : [나리](https://github.com/NYeonK), [람진](https://github.com/limejin), [르미](https://github.com/mandarin-sep), [앙꼬](https://github.com/hjyang369), [연어](https://github.com/sojung2)
-- 디자이너 : 비비
+- 디자이너 : [비비](https://ahead-catfish-b65.notion.site/Kim-Bibi-b6df62e00e4c497f8743d9f90e5ea5d1)
 
 
