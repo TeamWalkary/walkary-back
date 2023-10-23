@@ -52,7 +52,7 @@
     <img src="https://img.shields.io/badge/eslint-4B32C3?style=flat&logo=eslint&logoColor=white"> 
     <img src="https://img.shields.io/badge/prettier-F7B93E?style=flat&logo=prettier&logoColor=black">
 
-- 버전관리 도구 : yarn
+- 버전관리 도구 
   <img src="https://img.shields.io/badge/yarn-2C8EBB?style=flat&logo=yarn&logoColor=white">
 
 ### 백엔드
