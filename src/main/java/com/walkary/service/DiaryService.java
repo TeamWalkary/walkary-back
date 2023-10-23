@@ -78,6 +78,7 @@ public class DiaryService {
             editBuilder.content(diaryEdit.getContent());
         }
 
+
         //사진 정보 수정
         DiaryMedia diaryMedia = diaryMediaRepository.findByDiaryId(diaryId).orElseThrow(() -> new IllegalArgumentException("글 또는 사진이 존재하지 않습니다"));
 

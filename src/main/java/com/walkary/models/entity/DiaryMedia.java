@@ -29,7 +29,7 @@ public class DiaryMedia {
         this.diary = diary;
     }
 
-    public void edit(String image) {
+    public void edit(String image){
         attachment = image;
     }
 }
