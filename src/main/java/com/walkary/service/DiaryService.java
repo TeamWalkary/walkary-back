@@ -31,8 +31,8 @@ public class DiaryService {
 
     private final UserRepository userRepository;
 
-    @Transactional
     //일기 작성
+    @Transactional
     public void write(DiaryCreate diaryCreate) {
         UserEntity user = userRepository.findById(diaryCreate.getUserId()).orElseThrow(() -> new IllegalArgumentException("유저가 존재하지 않습니다"));
 
@@ -59,27 +59,36 @@ public class DiaryService {
     }
 
     @Transactional
-    public DiaryResponse edit(Long id, DiaryEdit diaryEdit) {
-        Diary diary = diaryRepository.findById(id)
+    public DiaryResponse edit(Long diaryId, DiaryEdit diaryEdit) {
+        //다이어리 정보 수정
+        Diary diary = diaryRepository.findById(diaryId)
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 글입니다"));
 
         DiaryEditor.DiaryEditorBuilder editBuilder = diary.toEditor();
 
-        if (diaryEdit.getDate() != null) {
+        if (diaryEdit.getDate() != null && !diaryEdit.getDate().equals("")) {
             editBuilder.date(diaryEdit.getDate());
         }
 
-        if (diaryEdit.getTitle() != null) {
+        if (diaryEdit.getTitle() != null && !diaryEdit.getTitle().equals("")) {
             editBuilder.title(diaryEdit.getTitle());
         }
 
-        if (diaryEdit.getContent() != null) {
+        if (diaryEdit.getContent() != null && !diaryEdit.getContent().equals("")) {
             editBuilder.content(diaryEdit.getContent());
+        }
+
+
+        //사진 정보 수정
+        DiaryMedia diaryMedia = diaryMediaRepository.findByDiaryId(diaryId).orElseThrow(() -> new IllegalArgumentException("글 또는 사진이 존재하지 않습니다"));
+
+        if (diaryEdit.getImage() != null && !diaryEdit.getImage().equals("")) {
+            diaryMedia.edit(diaryEdit.getImage());
         }
 
         diary.edit(editBuilder.build());
 
-        return new DiaryResponse(diary);
+        return new DiaryResponse(diary, diaryEdit.getImage());
     }
 
     public List<DiaryResponse> getList(Pageable pageable) {

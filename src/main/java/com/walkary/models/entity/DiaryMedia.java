@@ -28,4 +28,8 @@ public class DiaryMedia {
         this.attachment = attachment;
         this.diary = diary;
     }
+
+    public void edit(String image){
+        attachment = image;
+    }
 }
