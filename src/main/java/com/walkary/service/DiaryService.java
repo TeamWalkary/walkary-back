@@ -18,7 +18,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Slf4j
@@ -67,23 +66,25 @@ public class DiaryService {
 
         DiaryEditor.DiaryEditorBuilder editBuilder = diary.toEditor();
 
-        if (diaryEdit.getDate() != null) {
+        if (diaryEdit.getDate() != null && !diaryEdit.getDate().equals("")) {
             editBuilder.date(diaryEdit.getDate());
         }
 
-        if (diaryEdit.getTitle() != null) {
+        if (diaryEdit.getTitle() != null && !diaryEdit.getTitle().equals("")) {
             editBuilder.title(diaryEdit.getTitle());
         }
 
-        if (diaryEdit.getContent() != null) {
+        if (diaryEdit.getContent() != null && !diaryEdit.getContent().equals("")) {
             editBuilder.content(diaryEdit.getContent());
         }
 
-        //사진 정보 가져오기
-        DiaryMedia diaryMedia = diaryMediaRepository.findByDiaryId(diaryId).orElse(null);
-        if (diaryEdit.getImage() != null){
+        //사진 정보 수정
+        DiaryMedia diaryMedia = diaryMediaRepository.findByDiaryId(diaryId).orElseThrow(() -> new IllegalArgumentException("글 또는 사진이 존재하지 않습니다"));
+
+        if (diaryEdit.getImage() != null && !diaryEdit.getImage().equals("")) {
             diaryMedia.edit(diaryEdit.getImage());
         }
+
         diary.edit(editBuilder.build());
 
         return new DiaryResponse(diary, diaryEdit.getImage());

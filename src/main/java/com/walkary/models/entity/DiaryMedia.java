@@ -1,6 +1,5 @@
 package com.walkary.models.entity;
 
-import com.walkary.models.dto.request.DiaryEditor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -30,7 +29,7 @@ public class DiaryMedia {
         this.diary = diary;
     }
 
-    public void edit(String image){
+    public void edit(String image) {
         attachment = image;
     }
 }
