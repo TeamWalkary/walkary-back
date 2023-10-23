@@ -1,4 +1,4 @@
-# Walkary Front-End Team
+# Walkary Back-End Team
 
 # Walkary
 ![KakaoTalk_Image_2023-10-23-21-20-37](https://github.com/TeamWalkary/walkary-back/assets/125977702/846862bb-b75e-4e50-8be8-db1c807f01eb)
