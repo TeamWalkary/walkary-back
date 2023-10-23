@@ -1,3 +1,5 @@
+# Walkary Front-End Team
+
 # Walkary
 ![KakaoTalk_Image_2023-10-23-21-20-37](https://github.com/TeamWalkary/walkary-back/assets/125977702/846862bb-b75e-4e50-8be8-db1c807f01eb)
 
@@ -12,8 +14,8 @@
 
 ## 기능소개
 ### 로그인/회원가입 페이지
-![image](https://github.com/TeamWalkary/walkary-back/assets/125977702/f8f63afe-6511-4a0a-8235-a6fee9ab5683)
-![image](https://github.com/TeamWalkary/walkary-back/assets/125977702/1fc6c5c8-c0a2-4bf7-8a8c-3ac7658d27c6)
+![image](https://github.com/TeamWalkary/walkary-back/assets/125977702/f8f63afe-6511-4a0a-8235-a6fee9ab5683) | ![image](https://github.com/TeamWalkary/walkary-back/assets/125977702/1fc6c5c8-c0a2-4bf7-8a8c-3ac7658d27c6)
+
 
 ### 메인 페이지
 - 현재위치 표시
@@ -31,45 +33,57 @@
 ![image](https://hackmd.io/_uploads/ByAoa1EGT.png)
 
 
+
 ### 핀/일기 모아보기 페이지
 - 여태까지 입력했던 핀들과 일기들을 한번에 확인
-
-![image](https://hackmd.io/_uploads/ByjphJNM6.png)
+  
+![image](https://hackmd.io/_uploads/ByjphJNM6.png) 
 ![image](https://hackmd.io/_uploads/S1yyp1Nzp.png)
 
 
 
 ## 기술스택
 ### 프론트엔드
-- 언어
-  <img src="https://img.shields.io/badge/typescript-3178C6?style=flat&logo=typescript&logoColor=black"> 
-- 프레임 워크 
-  <img src="https://img.shields.io/badge/react-61DAFB?style=flat&logo=react&logoColor=black"> 
-- 스타일 
-  <img src="https://img.shields.io/badge/styledcomponents-DB7093?style=flat&logo=styledcomponents&logoColor=white"> 
-- 상태관리 
-    <img src="https://img.shields.io/badge/recoil-3578E5?style=flat&logo=recoil&logoColor=white"> 
-    <img src="https://img.shields.io/badge/eslint-4B32C3?style=flat&logo=eslint&logoColor=white"> 
-    <img src="https://img.shields.io/badge/prettier-F7B93E?style=flat&logo=prettier&logoColor=black">
 
-- 버전관리 도구 
-  <img src="https://img.shields.io/badge/yarn-2C8EBB?style=flat&logo=yarn&logoColor=white">
+| 역할 | 종류 |
+| --- | --- |
+| 언어 | ![TypeScript](https://img.shields.io/badge/typescript-3178C6?style=flat&logo=typescript&logoColor=black) |
+| 프레임워크 | ![React](https://img.shields.io/badge/react-61DAFB?style=flat&logo=react&logoColor=black) |
+| 스타일 | ![Styled Components](https://img.shields.io/badge/styledcomponents-DB7093?style=flat&logo=styledcomponents&logoColor=white) |
+| 상태관리 | ![Recoil](https://img.shields.io/badge/recoil-3578E5?style=flat&logo=recoil&logoColor=%23ffffff) ![ESLint](https://img.shields.io/badge/eslint-4B32C3?style=flat&logo=eslint&logoColor=%23ffffff) ![Prettier](https://img.shields.io/badge/prettier-F7B93E?style=flat&logo=prettier&logoColor=%23000000) |
+| 버전관리 도구 | ![Yarn](https://img.shields.io/badge/yarn-2C8EBB?style=flat&logo=yarn&logoColor=%23ffffff) |
+
 
 ### 백엔드
-- 언어
-  <img src="https://img.shields.io/badge/java-F7DF1E?style=flat&logo=java&logoColor=white">
-- 프레임 워크
-  <img src="https://img.shields.io/badge/spring boot-6DB33F?style=flat&logo=springboot&logoColor=white">
-- 라이브러리
-    <img src="https://img.shields.io/badge/spring secuirty-6DB33F?style=flat&logo=spring secuirty&logoColor=white">
-    <img src="https://img.shields.io/badge/jpa-2C8EBB?style=flat&logo=jpa&logoColor=white">
-- DB
-  <img src="https://img.shields.io/badge/mysql-4479A1?style=flat&logo=mysql&logoColor=white">
+
+| 역할 | 종류 |
+| --- | --- |
+| 언어 | ![Java](https://img.shields.io/badge/java-F7DF1E?style=flat&logo=java&logoColor=white) |
+| 프레임워크 | ![Spring Boot](https://img.shields.io/badge/spring%20boot-6DB33F?style=flat&logo=springboot&logoColor=white) |
+| 라이브러리 | ![Spring Security](https://img.shields.io/badge/spring%20security-6DB33F?style=flat&logo=springsecurity&logoColor=white) ![JPA](https://img.shields.io/badge/jpa-2C8EBB?style=flat&logo=jpa&logoColor=white) |
+| DB | ![MySQL](https://img.shields.io/badge/mysql-4479A1?style=flat&logo=mysql&logoColor=%23ffffff) |
 
 
-## Walkary 제작자
-- 백엔드 : [경](https://github.com/woo-yu), [리히트](https://github.com/RE-Heat), [웹서퍼](https://github.com/meengi07)
-- 프론트엔드 : [나리](https://github.com/NYeonK), [람진](https://github.com/limejin), [르미](https://github.com/mandarin-sep), [앙꼬](https://github.com/hjyang369), [연어](https://github.com/sojung2)
-- 디자이너 : [비비](https://ahead-catfish-b65.notion.site/Kim-Bibi-b6df62e00e4c497f8743d9f90e5ea5d1)
+
+## Walkary 제작자 
+|[나리 (FE Developer)](https://github.com/NYeonK)|[람진 (FE Developer)](https://github.com/limejin)|[르미 (FE Developer)](https://github.com/mandarin-sep)|[앙꼬 (FE Developer)](https://github.com/hjyang369)|[연어 (FE Developer)](https://github.com/sojung2)
+|------|------|------|------|------|
+|<img width="520" src="https://user-images.githubusercontent.com/87578512/178135232-7d1b4068-d94f-49e2-8ac0-4c8ea8f9d266.png">|<img width="520" src="https://github.com/TeamWalkary/front-end/assets/71490862/27c79342-2360-4dde-a97f-c9d2548e19bb">|<img width="520" src="https://github.com/TeamWalkary/front-end/assets/71490862/7bb1fce6-f8ce-4605-8e4a-81e5cee7730b">|<img width="520" src="https://github.com/TeamWalkary/front-end/assets/71490862/e14b8105-8da3-472c-b65d-e0d240769406">|<img width="520" src="https://github.com/TeamWalkary/front-end/assets/71490862/36e7b7f2-6dfd-4119-9944-c534b03d0e4a">|
+
+|[경 (BE Developer)](https://github.com/woo-yu)|[리히트 (BE Developer)](https://github.com/RE-Heat)|[웹서퍼 (BE Developer)](https://github.com/meengi07)|[비비 (Designer)](https://github.com/TeamWalkary/front-end/assets/71490862/f9d5b90e-a623-40c3-b4ae-1d22280e4475)
+|------|------|------|------|
+|<img width="520" src="https://github.com/TeamWalkary/front-end/assets/71490862/6768fefc-50b5-4aa1-8a40-a6ed0b66b434">|<img width="520" src="https://github.com/TeamWalkary/front-end/assets/71490862/7a988d0a-3bdf-4a59-88c2-4a853321d501">|<img width="520" src="https://github.com/TeamWalkary/front-end/assets/71490862/cc6af8d1-6bbc-4aa0-ba9a-408d1a660cb5">|<img width="520" src="https://github.com/TeamWalkary/front-end/assets/71490862/cff447bc-fa83-4ac0-8e16-0a074b6992ac">|
 
 
+## ⚙ Convention
+
+### commit message
+
+| 헤더     | 내용                                     |
+| -------- | ---------------------------------------- |
+| feat     | 새로운 기능 추가                         |
+| refactor | 코드 리팩토링                            |
+| fix      | 버그 수정                                |
+| design   | 기능에 지장 가지 않는 스타일 변경        |
+| init     | 빌드수행, 패키지 설치, 환경 설정 수정 등 |
+| etc      | 주석 추가삭제, reademe 작성              |
