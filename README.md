@@ -70,7 +70,7 @@
 |------|------|------|------|------|
 |<img width="520" src="https://user-images.githubusercontent.com/87578512/178135232-7d1b4068-d94f-49e2-8ac0-4c8ea8f9d266.png">|<img width="520" src="https://github.com/TeamWalkary/front-end/assets/71490862/27c79342-2360-4dde-a97f-c9d2548e19bb">|<img width="520" src="https://github.com/TeamWalkary/front-end/assets/71490862/7bb1fce6-f8ce-4605-8e4a-81e5cee7730b">|<img width="520" src="https://github.com/TeamWalkary/front-end/assets/71490862/e14b8105-8da3-472c-b65d-e0d240769406">|<img width="520" src="https://github.com/TeamWalkary/front-end/assets/71490862/36e7b7f2-6dfd-4119-9944-c534b03d0e4a">|
 
-|[경 (BE Developer)](https://github.com/woo-yu)|[리히트 (BE Developer)](https://github.com/RE-Heat)|[웹서퍼 (BE Developer)](https://github.com/meengi07)|[비비 (Designer)](https://github.com/TeamWalkary/front-end/assets/71490862/f9d5b90e-a623-40c3-b4ae-1d22280e4475)
+|[경 (BE Developer)](https://github.com/woo-yu)|[리히트 (BE Developer)](https://github.com/RE-Heat)|[웹서퍼 (BE Developer)](https://github.com/meengi07)|[비비 (Designer)](https://ahead-catfish-b65.notion.site/Kim-Bibi-b6df62e00e4c497f8743d9f90e5ea5d1?pvs=4)
 |------|------|------|------|
 |<img width="520" src="https://github.com/TeamWalkary/front-end/assets/71490862/6768fefc-50b5-4aa1-8a40-a6ed0b66b434">|<img width="520" src="https://github.com/TeamWalkary/front-end/assets/71490862/7a988d0a-3bdf-4a59-88c2-4a853321d501">|<img width="520" src="https://github.com/TeamWalkary/front-end/assets/71490862/cc6af8d1-6bbc-4aa0-ba9a-408d1a660cb5">|<img width="520" src="https://github.com/TeamWalkary/front-end/assets/71490862/cff447bc-fa83-4ac0-8e16-0a074b6992ac">|
 
