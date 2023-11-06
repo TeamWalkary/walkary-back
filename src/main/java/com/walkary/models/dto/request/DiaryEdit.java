@@ -14,10 +14,10 @@ public class DiaryEdit {
     private LocalDate date;
     private String title;
     private String content;
-    private String image;
+    private byte[] image;
 
     @Builder
-    public DiaryEdit(LocalDate date, String title, String content, String image) {
+    public DiaryEdit(LocalDate date, String title, String content, byte[] image) {
         this.date = date;
         this.title = title;
         this.content = content;

@@ -14,11 +14,11 @@ public class DiaryCreate {
     private LocalDate date;
     private String title;
     private String content;
-    private String image;
+    private byte[] image;
 
     private String userId;
 
-    public DiaryCreate(LocalDate date, String title, String content, String image, String userId) {
+    public DiaryCreate(LocalDate date, String title, String content, byte[] image, String userId) {
         this.date = date;
         this.title = title;
         this.content = content;
