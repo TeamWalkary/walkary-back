@@ -13,6 +13,8 @@ RUN gradle build -x test --parallel
 FROM openjdk:17.0-slim
 WORKDIR /app
 
+ENV TZ Asia/Seoul
+
 COPY --from=builder /build/build/libs/walkary-server-0.0.1-SNAPSHOT.jar /app/app.jar
 ARG MYSQL_HOST
 ARG MYSQL_NAME
