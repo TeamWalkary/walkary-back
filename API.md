@@ -14,9 +14,9 @@
 
 ```json
 {
-    "userId": "a",
-    "password": "1234",
-    "username": "mason"
+    "userId": "아이디",
+    "password": "비번",
+    "username": "유저이름"
 }
 ```
 
@@ -53,7 +53,7 @@
 ```json
 {
     "userId": "아이디",
-    "password": "111"
+    "password": "비밀번호"
 }
 ```
 
