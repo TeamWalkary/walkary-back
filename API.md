@@ -121,13 +121,16 @@
 
 ### Request
 
+```
 > 필수 요건 : Header의 Authorization에 Bearer XXX 토큰 넣어야 함
 > 예시 : /apis/main/diary?date=20231127
 > 해당하는 날짜 필요
+```
 
 ### Response
 
 - 조회 성공
+```
 {
     "id": diary 아이디,
     "date": null,
@@ -135,7 +138,7 @@
     "content": "콘텐츠",
     "image": "data:image/png;base64,[바이너리 데이터]"
 }
-
+```
 
 - 조회 실패(잘못된 토큰) [수정 필요]
 403 Forbidden
@@ -151,14 +154,17 @@
 
 ### Request
 
+```
 > 필수 요건 : Header의 Authorization에 Bearer XXX 토큰 넣어야 함
 > 예시 : /apis/collect/diary?limit=5&offset=0&sortBy=latest
 > limit 조회 사이즈
 > offset 시작 페이지
 > sortBy=latest 최신순, 없으면 작성 순서대로 (기준값은 diaryId)
+```
 
 ### Response
 - 조회 성공
+``` json
 [
     {
         "id": 471,
@@ -178,10 +184,11 @@
         "id": 440,
         "title": "11.06 new Test",
         "content": "테스트",
-        "image": "data:image/png;base64,[바이너리 데이터]
+        "image": "data:image/png;base64,[바이너리 데이터]"
         "date": "2023-11-06"
     }
 ]
+```
 
 ## 일기 수정
 | TYPE |         URL            | TOKEN |
@@ -189,15 +196,19 @@
 | PATCH | /apis/diary/{diaryId} |   O   |
 
 ### Request
+
 > 필수 요건 : Header의 Authorization에 Bearer XXX 토큰 넣어야 함
 > 예시 : /apis/diary/471
 > diaryId에 수정해야 할 해당 diaryId를 넣어야 함.
 
 ### Response
 - 수정 성공
+``` json
 {
     "message": "수정되었습니다."
 }  
+```
+
 
 - 수정 실패(잘못된 토큰)
 HTTP Status 500 – Internal Server Error [페이지]
@@ -212,14 +223,19 @@ HTTP Status 500 – Internal Server Error [페이지]
 > 필수 요건 : Header의 Authorization에 Bearer XXX 토큰 넣어야 함
 > 삭제할 diaryId를 URL에 기입해야 함
 
+
 ### Response
 - 삭제 성공
+``` json
 {
     "message": "일기가 삭제되었습니다."
 }
+```
 
 - 삭제 실패 (해당하는 일기가 존재하지 않을 때)
+``` json
 {
     "message": "일기 삭제하기에 실패하였습니다."
 
 }
+```
