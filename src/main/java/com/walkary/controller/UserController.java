@@ -27,11 +27,12 @@ public class UserController {
     @PostMapping("/signup")
     public ResponseEntity<MessageResponse> signup(@RequestBody UserDto userDto) {
         String message = userService.signup(userDto);
-        return ResponseEntity
-                .ok(new MessageResponse(message));
+        if (message.equals("이미 존재하는 아이디입니다.")) {
+            return ResponseEntity.badRequest().body(new MessageResponse(message));
+        } else {
+            return ResponseEntity
+                    .ok(new MessageResponse(message));
+        }
     }
-
-
-
 
 }
