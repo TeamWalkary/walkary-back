@@ -5,6 +5,7 @@ import com.walkary.models.dto.request.DiaryCreate;
 import com.walkary.models.dto.request.DiaryEdit;
 import com.walkary.models.dto.response.DiaryListResponse;
 import com.walkary.models.dto.response.DiaryResponse;
+import com.walkary.models.dto.response.ErrorMessage;
 import com.walkary.service.DiaryService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -47,9 +48,13 @@ public class DiaryController {
     //오늘의 일기 조회하기
     @GetMapping("/main/diary")
     @PreAuthorize("hasRole(ROLE_USER)")
-    public ResponseEntity<DiaryResponse> findDiaryByDate(@RequestParam(name = "date", required = false) @DateTimeFormat(pattern = "yyyyMMdd") LocalDate date, HttpServletRequest request) {
+    public ResponseEntity<?> findDiaryByDate(@RequestParam(name = "date", required = false) @DateTimeFormat(pattern = "yyyyMMdd") LocalDate date, HttpServletRequest request) {
         String userId = extractUserId(request);
         DiaryResponse diaryResponse = diaryService.findDiaryByDate(userId, date != null ? date : LocalDate.now());
+        if (diaryResponse.getId() == null) {
+            return ResponseEntity.ok(new ErrorMessage("일기를 작성해주세요"));
+        }
+
         try {
             return ResponseEntity.ok(diaryResponse);
         } catch (Exception e) {

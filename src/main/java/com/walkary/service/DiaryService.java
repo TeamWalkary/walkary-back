@@ -114,6 +114,11 @@ public class DiaryService {
 
     public DiaryResponse findDiaryByDate(String userId, LocalDate date) {
         Diary diary = diaryRepository.findByDate(userId, date);
+
+        if (diary == null) {
+            return DiaryResponse.builder().build();
+        }
+
         DiaryMedia diaryMedia = diaryMediaRepository.findByDiaryId(diary.getId()).orElse(null);
 
         return DiaryResponse.builder()
