@@ -5,7 +5,6 @@ import com.walkary.models.dto.request.DiaryCreate;
 import com.walkary.models.dto.request.DiaryEdit;
 import com.walkary.models.dto.response.DiaryListResponse;
 import com.walkary.models.dto.response.DiaryResponse;
-import com.walkary.models.dto.response.ErrorMessage;
 import com.walkary.service.DiaryService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -19,6 +18,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.time.LocalDate;
+import java.util.Arrays;
 import java.util.List;
 
 import static com.walkary.config.security.security.jwt.JwtProvider.extractUserId;
@@ -52,7 +52,7 @@ public class DiaryController {
         String userId = extractUserId(request);
         DiaryResponse diaryResponse = diaryService.findDiaryByDate(userId, date != null ? date : LocalDate.now());
         if (diaryResponse.getId() == null) {
-            return ResponseEntity.ok(new ErrorMessage("일기를 작성해주세요"));
+            return ResponseEntity.ok(Arrays.copyOf(new int[0], 0));
         }
 
         try {
