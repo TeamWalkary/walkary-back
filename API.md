@@ -40,6 +40,9 @@
 }
 ```
 
+- 실패 [500 Internal Sever Error]
+  서버 내부 오류
+
 <br />
 
 ## 로그인 API
@@ -74,6 +77,9 @@
     "message": "잘못된 id 혹은 password 입니다."
 }
 ```
+
+- 로그인 실패 [500 Internal Server Error]
+서버 내부 오류
 
 # 일기 API
 
@@ -114,6 +120,9 @@
 ```
 403 Forbidden
 
+- 일기 작성 실패 [500 Internal Server Error]
+서버 내부 오류
+
 ## 오늘의 일기 조회하기
 | TYPE |       URL       | TOKEN |
 | :--: | :-------------: | :---: |
@@ -149,6 +158,9 @@
 
 - 조회 실패(잘못된 토큰 혹은 토큰 만료) [수정 필요]
 403 Forbidden
+
+- 조회 실패 [500 Internal Server Error]
+서버 내부 오류
 
 
 ## 일기 모아보기
@@ -193,6 +205,8 @@
     }
 ]
 ```
+- 조회 실패 [500 Internal Server Error]
+서버 내부 오류
 
 ## 일기 수정
 | TYPE |         URL            | TOKEN |
@@ -213,7 +227,6 @@
 }  
 ```
 
-
 - 수정 실패(잘못된 토큰)
 HTTP Status 500 – Internal Server Error [페이지]
 
@@ -226,7 +239,6 @@ HTTP Status 500 – Internal Server Error [페이지]
 ### Request
 > 필수 요건 : Header의 Authorization에 Bearer XXX 토큰 넣어야 함
 > 삭제할 diaryId를 URL에 기입해야 함
-
 
 ### Response
 - 삭제 성공 [200 OK]
@@ -243,3 +255,6 @@ HTTP Status 500 – Internal Server Error [페이지]
 
 }
 ```
+
+- 삭제 실패 [500 Internal Server Error]
+  서버 내부 오류
