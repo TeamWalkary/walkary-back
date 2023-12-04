@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.time.LocalDate;
+import java.util.Arrays;
 import java.util.List;
 
 import static com.walkary.config.security.security.jwt.JwtProvider.extractUserId;
@@ -47,9 +48,14 @@ public class DiaryController {
     //오늘의 일기 조회하기
     @GetMapping("/main/diary")
     @PreAuthorize("hasRole(ROLE_USER)")
-    public ResponseEntity<DiaryResponse> findDiaryByDate(@RequestParam(name = "date", required = false) @DateTimeFormat(pattern = "yyyyMMdd") LocalDate date, HttpServletRequest request) {
+    public ResponseEntity<?> findDiaryByDate(@RequestParam(name = "date", required = false) @DateTimeFormat(pattern = "yyyyMMdd") LocalDate date, HttpServletRequest request) {
         String userId = extractUserId(request);
         DiaryResponse diaryResponse = diaryService.findDiaryByDate(userId, date != null ? date : LocalDate.now());
+
+        if (diaryResponse.getId() == null) {
+            return ResponseEntity.ok(Arrays.copyOf(new int[0], 0));
+        }
+
 
         try {
             return ResponseEntity.ok(diaryResponse);
