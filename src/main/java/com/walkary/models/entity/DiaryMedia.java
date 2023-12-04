@@ -3,11 +3,13 @@ package com.walkary.models.entity;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
 
 @Entity
 @Getter
+@Setter
 @NoArgsConstructor
 public class DiaryMedia {
     @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
@@ -20,16 +22,16 @@ public class DiaryMedia {
     private Long id;
 
     @Column
-    private String attachment;
+    private byte[] attachment;
 
     @Builder
-    public DiaryMedia(Long id, String attachment, Diary diary) {
+    public DiaryMedia(Long id, byte[] attachment, Diary diary) {
         this.id = id;
         this.attachment = attachment;
         this.diary = diary;
     }
 
-    public void edit(String image){
+    public void edit(byte[] image){
         attachment = image;
     }
 }

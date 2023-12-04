@@ -10,10 +10,10 @@ public class DiaryEditor {
     private LocalDate date;
     private String title;
     private String content;
-    private String image;
+    private byte[] image;
 
     @Builder
-    public DiaryEditor(LocalDate date, String title, String content, String image) {
+    public DiaryEditor(LocalDate date, String title, String content, byte[] image) {
         this.date = date;
         this.title = title;
         this.content = content;

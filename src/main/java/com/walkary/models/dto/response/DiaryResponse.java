@@ -13,7 +13,7 @@ public class DiaryResponse {
     private final LocalDate date;
     private final String title;
     private final String content;
-    private String image;
+    private byte[] image;
 
     public DiaryResponse(Diary diary) {
         this.id = diary.getId();
@@ -22,7 +22,7 @@ public class DiaryResponse {
         this.content = diary.getContent();
     }
 
-    public DiaryResponse(Diary diary, String image) {
+    public DiaryResponse(Diary diary, byte[] image) {
         this.id = diary.getId();
         this.date = diary.getDate();
         this.title = diary.getTitle();
@@ -39,7 +39,7 @@ public class DiaryResponse {
     }
 
     @Builder
-    public DiaryResponse(Long id, LocalDate date, String title, String content, String image) {
+    public DiaryResponse(Long id, LocalDate date, String title, String content, byte[] image) {
         this.id = id;
         this.date = date;
         this.title = title;

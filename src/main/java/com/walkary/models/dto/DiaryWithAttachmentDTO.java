@@ -16,10 +16,10 @@ public class DiaryWithAttachmentDTO {
     private LocalDate date;
     private String title;
     private String content;
-    private String attachment;
+    private byte[] attachment;
 
     @Builder
-    public DiaryWithAttachmentDTO(Long id, LocalDate date, String title, String content, String attachment) {
+    public DiaryWithAttachmentDTO(Long id, LocalDate date, String title, String content, byte[] attachment) {
         this.id = id;
         this.date = date;
         this.title = title;

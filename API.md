@@ -24,7 +24,7 @@
 
 ### Response
 
-- 회원가입 성공
+- 회원가입 성공 [200 OK]
 
 ```json
 {
@@ -32,13 +32,16 @@
 }
 ```
 
-- 인증 실패 (중복 회원)
+- 인증 실패 (중복 회원) [400 Bad Request]
 
 ```json
 {
     "message": "이미 존재하는 아이디입니다."
 }
 ```
+
+- 실패 [500 Internal Sever Error]
+  서버 내부 오류
 
 <br />
 
@@ -59,7 +62,7 @@
 
 ### Response
 
-- 로그인 성공(토큰 발급)
+- 로그인 성공(토큰 발급) [200 OK]
 
 ```json
 {
@@ -67,13 +70,16 @@
 }
 ```
 
-- 로그인 실패(잘못된 id 혹은 패스워드)
+- 로그인 실패(잘못된 id 혹은 패스워드) [400 Bad Request]
 
 ```json
 {
     "message": "잘못된 id 혹은 password 입니다."
 }
 ```
+
+- 로그인 실패 [500 Internal Server Error]
+서버 내부 오류
 
 # 일기 API
 
@@ -85,7 +91,7 @@
 
 ### Request
 
-```json
+```json 
 {
   "title":"타이틀명",
   "content":"콘텐츠",
@@ -98,7 +104,7 @@
 
 ### Response
 
-- 일기 작성 성공
+- 일기 작성 성공 [200 OK]
 
 ```json
 {
@@ -113,6 +119,9 @@
 }
 ```
 403 Forbidden
+
+- 일기 작성 실패 [500 Internal Server Error]
+서버 내부 오류
 
 ## 오늘의 일기 조회하기
 | TYPE |       URL       | TOKEN |
@@ -129,10 +138,10 @@
 
 ### Response
 
-- 조회 성공
+- 조회 성공 [200 OK]
 ``` json
 {
-    "id": diary 아이디,
+    "id": "diary 아이디",
     "date": null,
     "title": "타이틀명",
     "content": "콘텐츠",
@@ -140,7 +149,7 @@
 }
 ```
 
-- 조회 실패(일기 부재 시)
+- 조회 실패(일기 부재 시) [200 OK]
 ``` json
 {
     "message": "일기를 작성해주세요"
@@ -149,6 +158,9 @@
 
 - 조회 실패(잘못된 토큰 혹은 토큰 만료) [수정 필요]
 403 Forbidden
+
+- 조회 실패 [500 Internal Server Error]
+서버 내부 오류
 
 
 ## 일기 모아보기
@@ -167,7 +179,7 @@
 ```
 
 ### Response
-- 조회 성공
+- 조회 성공 [200 OK]
 ``` json
 [
     {
@@ -193,6 +205,8 @@
     }
 ]
 ```
+- 조회 실패 [500 Internal Server Error]
+서버 내부 오류
 
 ## 일기 수정
 | TYPE |         URL            | TOKEN |
@@ -206,13 +220,12 @@
 > diaryId에 수정해야 할 해당 diaryId를 넣어야 함.
 
 ### Response
-- 수정 성공
+- 수정 성공 [200 OK]
 ``` json
 {
     "message": "수정되었습니다."
 }  
 ```
-
 
 - 수정 실패(잘못된 토큰)
 HTTP Status 500 – Internal Server Error [페이지]
@@ -227,19 +240,21 @@ HTTP Status 500 – Internal Server Error [페이지]
 > 필수 요건 : Header의 Authorization에 Bearer XXX 토큰 넣어야 함
 > 삭제할 diaryId를 URL에 기입해야 함
 
-
 ### Response
-- 삭제 성공
+- 삭제 성공 [200 OK]
 ``` json
 {
     "message": "일기가 삭제되었습니다."
 }
 ```
 
-- 삭제 실패 (해당하는 일기가 존재하지 않을 때)
+- 삭제 실패 (해당하는 일기가 존재하지 않을 때) [400 Bad Request]
 ``` json
 {
     "message": "일기 삭제하기에 실패하였습니다."
 
 }
 ```
+
+- 삭제 실패 [500 Internal Server Error]
+  서버 내부 오류

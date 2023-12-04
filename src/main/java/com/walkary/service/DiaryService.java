@@ -19,6 +19,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.nio.charset.StandardCharsets;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -48,7 +49,7 @@ public class DiaryService {
         diaryRepository.save(diary);
 
         DiaryMedia diaryMedia = DiaryMedia.builder()
-                .attachment(diaryCreate.getImage())
+                .attachment(diaryCreate.getImage().getBytes(StandardCharsets.UTF_8))
                 .diary(diary)
                 .build();
         diaryMediaRepository.save(diaryMedia);
