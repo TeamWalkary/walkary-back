@@ -13,11 +13,10 @@ public class DiaryListResponse {
     private LocalDate Date;
     private String title;
     private String content;
-    private String image;
-
+    private byte[] image;
 
     @Builder
-    public DiaryListResponse(Long id, LocalDate date, String title, String content, String image) {
+    public DiaryListResponse(Long id, LocalDate date, String title, String content, byte[] image) {
         this.id = id;
         this.Date = date;
         this.title = title;

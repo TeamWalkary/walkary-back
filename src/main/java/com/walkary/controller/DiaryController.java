@@ -50,6 +50,7 @@ public class DiaryController {
     public ResponseEntity<DiaryResponse> findDiaryByDate(@RequestParam(name = "date", required = false) @DateTimeFormat(pattern = "yyyyMMdd") LocalDate date, HttpServletRequest request) {
         String userId = extractUserId(request);
         DiaryResponse diaryResponse = diaryService.findDiaryByDate(userId, date != null ? date : LocalDate.now());
+
         try {
             return ResponseEntity.ok(diaryResponse);
         } catch (Exception e) {
@@ -68,7 +69,7 @@ public class DiaryController {
 
         String userId = extractUserId(request);
         int page = (offset != null) ? Integer.parseInt(offset) : 0;
-        int size = (limit !=null) ? Integer.parseInt(limit) : 5;
+        int size = (limit != null) ? Integer.parseInt(limit) : 5;
 
         Sort sort = (sortBy.equals("latest")) ? Sort.by(Sort.Order.desc("id")) : Sort.by(Sort.Order.asc("id"));
         Pageable pageable = PageRequest.of(page, size, sort);
