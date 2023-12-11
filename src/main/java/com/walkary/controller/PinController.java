@@ -55,14 +55,11 @@ public class PinController {
     ) {
         final String userId = JwtProvider.extractUserId(httpRequest);
 
-        try {
-            pointMapService.delete(userId, pinId);
+        pointMapService.delete(userId, pinId);
 
-            return ResponseEntity.ok(
-                    new MessageResponse("핀이 삭제되었습니다.")
-            );
-        } catch (Exception e) {
-            return ResponseEntity.badRequest().body(new MessageResponse("핀 삭제하기 실패."));
-        }
+        return ResponseEntity.ok(
+                new MessageResponse("핀이 삭제되었습니다.")
+        );
+
     }
 }
