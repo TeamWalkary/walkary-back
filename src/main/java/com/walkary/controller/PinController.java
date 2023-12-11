@@ -46,4 +46,23 @@ public class PinController {
                 new MessageResponse("핀이 수정되었습니다.")
         );
     }
+
+    @DeleteMapping("/{pinId}")
+    @PreAuthorize("hasRole(ROLE_USER)")
+    public ResponseEntity<MessageResponse> delete(
+            HttpServletRequest httpRequest,
+            @PathVariable Long pinId
+    ) {
+        final String userId = JwtProvider.extractUserId(httpRequest);
+
+        try {
+            pointMapService.delete(userId, pinId);
+
+            return ResponseEntity.ok(
+                    new MessageResponse("핀이 삭제되었습니다.")
+            );
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(new MessageResponse("핀 삭제하기 실패."));
+        }
+    }
 }

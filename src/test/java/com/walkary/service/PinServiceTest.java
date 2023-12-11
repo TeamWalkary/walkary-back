@@ -61,4 +61,32 @@ public class PinServiceTest {
         Assertions.assertThat(mapList.get(0).latitude()).isEqualTo(36);
         Assertions.assertThat(mapList.get(0).longitude()).isEqualTo(36);
     }
+
+    @Test
+    @DisplayName("핀 삭제")
+    public void test2() throws Exception {
+        //given
+        final Timestamp now = Timestamp.from(Instant.now());
+
+        Point point = new Point(36, 80);
+        UserEntity user = userRepository.findById("zzz").orElseThrow(() ->
+                new IllegalArgumentException("없는 유저입니다")
+        );
+
+        final PointMap pointMap = PointMap.builder()
+                .point(point)
+                .user(user)
+                .content("삭제용 컨텐츠")
+                .date(now.toLocalDateTime().toLocalDate())
+                .createdAt(now)
+                .updatedAt(now)
+                .build();
+        pointMapRepository.save(pointMap);
+
+        //when
+        pointMapService.delete(user.getId(), pointMap.getId());
+
+        //then
+        Assertions.assertThat(pointMapRepository.count()).isEqualTo(2);
+    }
 }

@@ -30,17 +30,17 @@ public class PointMapService {
 
     public void create(final String userId, final String content, final Point point) {
         final UserEntity user = userRepository.findById(userId).orElseThrow(
-                () ->  new IllegalArgumentException("잘못된 userId입니다 다시 확인해주세요.")
+                () -> new IllegalArgumentException("잘못된 userId입니다 다시 확인해주세요.")
         );
         final Timestamp now = Timestamp.from(Instant.now());
         final PointMap pointMap = PointMap.builder()
-                        .point(point)
-                        .user(user)
-                        .content(content)
-                        .date(now.toLocalDateTime().toLocalDate())
-                        .createdAt(now)
-                        .updatedAt(now)
-                        .build();
+                .point(point)
+                .user(user)
+                .content(content)
+                .date(now.toLocalDateTime().toLocalDate())
+                .createdAt(now)
+                .updatedAt(now)
+                .build();
 
         repository.save(pointMap);
     }
@@ -52,16 +52,30 @@ public class PointMapService {
 
         PinEditor.PinEditorBuilder editBuilder = pointMap.toEditor();
 
-        if (content != null && !content.equals("")){
+        if (content != null && !content.equals("")) {
             editBuilder.content(content);
         }
 
-        if (point != null){
+        if (point != null) {
             editBuilder.point(point);
         }
 
         pointMap.edit(editBuilder.build());
 
+    }
+
+    @Transactional
+    public void delete(String userId, Long pinId) {
+        //핀 존재하는지 확인
+        PointMap pointMap = repository.findById(pinId).orElseThrow(
+                () -> new IllegalArgumentException("존재하지 않는 핀입니다"));
+
+        //현재 사용자와 핀 작성자가 일치하는지 확인
+        if (!pointMap.getUser().getId().equals(userId)) {
+            throw new IllegalArgumentException("핀 작성자와 현 사용자의 아이디가 동일하지 않습니다");
+        }
+
+        repository.delete(pointMap);
     }
 
     public List<PinResponse> getMapList(final String userId, final LocalDate parsedDate, final SortType sortType) {
@@ -70,7 +84,7 @@ public class PointMapService {
             case OLDEST -> Sort.Direction.DESC;
         };
         return repository.findAllByUserIdAndDate(userId, parsedDate, Sort.by(direction, "id")).stream().map(point ->
-                    new PinResponse(
+                new PinResponse(
                         point.getId(),
                         point.getContent(),
                         point.getPoint().getX(),
@@ -79,6 +93,4 @@ public class PointMapService {
                 )
         ).collect(Collectors.toList());
     }
-
-
 }

@@ -35,12 +35,6 @@ class DiaryControllerTest {
     @Autowired
     private DiaryRepository diaryRepository;
 
-
-    @BeforeEach
-    void clean() {
-        diaryRepository.deleteAll();
-    }
-
     //일기 작성 테스트
 //    @Test
 //    @DisplayName("일기작성 테스트")
