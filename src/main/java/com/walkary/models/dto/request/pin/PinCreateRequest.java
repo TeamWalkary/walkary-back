@@ -1,4 +1,4 @@
-package com.walkary.models.dto;
+package com.walkary.models.dto.request.pin;
 
 public record PinCreateRequest(
         String contents,

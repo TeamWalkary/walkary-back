@@ -1,7 +1,8 @@
 package com.walkary.service;
 
 import com.walkary.models.SortType;
-import com.walkary.models.dto.PinResponse;
+import com.walkary.models.dto.request.pin.PinEditor;
+import com.walkary.models.dto.response.pin.PinResponse;
 import com.walkary.models.entity.PointMap;
 import com.walkary.models.entity.UserEntity;
 import com.walkary.repository.PointMapRepository;
@@ -10,6 +11,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.geo.Point;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.Timestamp;
 import java.time.Instant;
@@ -43,6 +45,25 @@ public class PointMapService {
         repository.save(pointMap);
     }
 
+    @Transactional
+    public void edit(final Long id, final String content, final Point point) {
+        //핀 유무 확인
+        PointMap pointMap = repository.findById(id).orElseThrow(() -> new IllegalArgumentException("존재하지 않는 핀입니다"));
+
+        PinEditor.PinEditorBuilder editBuilder = pointMap.toEditor();
+
+        if (content != null && !content.equals("")){
+            editBuilder.content(content);
+        }
+
+        if (point != null){
+            editBuilder.point(point);
+        }
+
+        pointMap.edit(editBuilder.build());
+
+    }
+
     public List<PinResponse> getMapList(final String userId, final LocalDate parsedDate, final SortType sortType) {
         Sort.Direction direction = switch (sortType) {
             case LATEST -> Sort.Direction.ASC;
@@ -58,4 +79,6 @@ public class PointMapService {
                 )
         ).collect(Collectors.toList());
     }
+
+
 }

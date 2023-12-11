@@ -2,16 +2,14 @@ package com.walkary.controller;
 
 import com.walkary.config.security.security.jwt.JwtProvider;
 import com.walkary.models.dto.MessageResponse;
-import com.walkary.models.dto.PinCreateRequest;
+import com.walkary.models.dto.request.pin.PinCreateRequest;
+import com.walkary.models.dto.request.pin.PinEditRequest;
 import com.walkary.service.PointMapService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.geo.Point;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -33,6 +31,19 @@ public class PinController {
 
         return ResponseEntity.ok(
                 new MessageResponse("핀이 생성되었습니다.")
+        );
+    }
+
+    @PatchMapping
+    @PreAuthorize("hasRole(ROLE_USER)")
+    public ResponseEntity<MessageResponse> edit(
+            HttpServletRequest httpRequest,
+            @RequestBody PinEditRequest request
+    ) {
+        pointMapService.edit(request.id(), request.contents(), new Point(request.longitude(), request.latitude()));
+
+        return ResponseEntity.ok(
+                new MessageResponse("핀이 수정되었습니다.")
         );
     }
 }

@@ -1,4 +1,4 @@
-package com.walkary.models.dto.response;
+package com.walkary.models.dto;
 
 import lombok.Getter;
 

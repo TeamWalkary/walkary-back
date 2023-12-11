@@ -1,4 +1,4 @@
-package com.walkary.models.dto;
+package com.walkary.models.dto.response.pin;
 
 import java.util.List;
 

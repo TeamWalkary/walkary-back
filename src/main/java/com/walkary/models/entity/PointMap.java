@@ -1,5 +1,6 @@
 package com.walkary.models.entity;
 
+import com.walkary.models.dto.request.pin.PinEditor;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -45,4 +46,16 @@ public class PointMap {
     @Column
     @UpdateTimestamp
     private Timestamp updatedAt;
+
+
+    public PinEditor.PinEditorBuilder toEditor() {
+        return PinEditor.builder()
+                .content(content)
+                .point(point);
+    }
+
+    public void edit(PinEditor build) {
+        content = build.getContent();
+        point = build.getPoint();
+    }
 }
