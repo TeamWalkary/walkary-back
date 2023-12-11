@@ -6,6 +6,8 @@ import com.walkary.models.dto.request.UserLoginRequest;
 import com.walkary.models.dto.request.UserSignupRequest;
 import com.walkary.service.UserService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.ResponseCookie;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -22,8 +24,20 @@ public class UserController {
     private final UserService userService;
 
     @PostMapping("/login")
-    public ResponseEntity<JwtToken> login(@Valid @RequestBody UserLoginRequest loginUser) {
-        return ResponseEntity.ok().body(userService.login(loginUser));
+    public ResponseEntity<String> login(@Valid @RequestBody UserLoginRequest loginUser) {
+        JwtToken jwtToken = userService.login(loginUser);
+        HttpHeaders headers = new HttpHeaders();
+
+        headers.add(HttpHeaders.AUTHORIZATION, jwtToken.accessToken());
+        ResponseCookie cookie = ResponseCookie.from("refreshAuthorization", jwtToken.refreshToken())
+                .path("/")
+                .domain(".walkary.fun")
+                .sameSite("None")
+                .httpOnly(true)
+                .secure(true)
+                .build();
+        headers.add(HttpHeaders.SET_COOKIE, cookie.toString());
+        return ResponseEntity.ok().headers(headers).body("login success");
     }
 
     @PostMapping("/signup")

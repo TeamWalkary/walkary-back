@@ -10,12 +10,12 @@ import javax.validation.constraints.Size;
  */
 public record UserLoginRequest(
         @NotEmpty(message = "로그인 정보가 유효하지 않습니다.")
-        @Size(min = 4, max = 20, message = "로그인 정보가 유효하지 않습니다.")
+        @Size(max = 20, message = "로그인 정보가 유효하지 않습니다.")
         @Pattern(regexp = "^[a-zA-Z0-9]*$", message = "로그인 정보가 유효하지 않습니다.")
         String userId,
 
         @NotEmpty(message = "로그인 정보가 유효하지 않습니다.")
-        @Size(min = 8, max = 16, message = "로그인 정보가 유효하지 않습니다.")
+        @Size(max = 16, message = "로그인 정보가 유효하지 않습니다.")
         String password
 ) {
 }

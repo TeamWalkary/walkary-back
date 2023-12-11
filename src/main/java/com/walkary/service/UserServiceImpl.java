@@ -37,7 +37,10 @@ public class UserServiceImpl implements UserService {
         if (loginRequest.password().equals(userEntity.getPassword())) {
             Collection<SimpleGrantedAuthority> authorities = Collections.singletonList(new SimpleGrantedAuthority("ROLE_USER"));
             User user = new User(userEntity.getId(), userEntity.getPassword(), authorities);
-            return jwtProvider.generateToken(user);
+            JwtToken jwtToken = jwtProvider.generateToken(user);
+            userEntity.setToken(jwtToken.refreshToken());
+            userRepository.save(userEntity);
+            return jwtToken;
         } else {
             throw new UsernameNotFoundException("잘못된 id 혹은 password 입니다.");
         }

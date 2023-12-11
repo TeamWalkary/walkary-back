@@ -4,6 +4,7 @@ package com.walkary.models.entity;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
@@ -15,6 +16,7 @@ import java.sql.Timestamp;
 
 @Entity
 @Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "user")
@@ -35,6 +37,9 @@ public class UserEntity {
 
     @Column
     private String phone;
+
+    @Column
+    private String token;
 
     @Column
     @CreationTimestamp
