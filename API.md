@@ -218,6 +218,13 @@
 > 필수 요건 : Header의 Authorization에 Bearer XXX 토큰 넣어야 함
 > 예시 : /apis/diary/471
 > diaryId에 수정해야 할 해당 diaryId를 넣어야 함.
+``` json
+{    
+    "title": "수정된 타이틀",
+    "content": "수정된 콘텐츠",
+    "image": "이미지 파일"
+}
+```
 
 ### Response
 - 수정 성공 [200 OK]
