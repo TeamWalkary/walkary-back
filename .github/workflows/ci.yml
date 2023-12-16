@@ -52,7 +52,6 @@ jobs:
           host: ${{ secrets.EC2_HOST }} # EC2 인스턴스 퍼블릭 DNS
           username: ubuntu
           key: ${{ secrets.SSH_PRIVATE_KEY }} # pem 키
-          passphrase: ${{ secrets.SSH_PASSPHRASE }}
           # 도커 작업
           script: |
             sudo docker stop ubuntu_app_1
