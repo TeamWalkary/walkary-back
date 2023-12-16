@@ -45,3 +45,18 @@ jobs:
             MYSQL_HOST=${{ secrets.MYSQL_HOST }}
             MYSQL_NAME=${{ secrets.MYSQL_NAME }}
             MYSQL_PASSWORD=${{ secrets.MYSQL_PASSWORD }}
+
+      - name: Up docker-compose
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.EC2_HOST }} # EC2 인스턴스 퍼블릭 DNS
+          username: ubuntu
+          key: ${{ secrets.SSH_PRIVATE_KEY }} # pem 키
+          passphrase: ${{ secrets.SSH_PASSPHRASE }}
+          # 도커 작업
+          script: |
+            sudo docker stop ubuntu_app_1
+            sudo docker rm ubuntu_app_1
+            sudo docker rmi a8118199/allercheck_app
+            sudo docker pull a8118199/allercheck_app
+            sudo docker-compose -f docker-compose-prod.yml up -d
