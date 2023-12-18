@@ -2,6 +2,8 @@ package com.walkary.service;
 
 import com.walkary.models.SortType;
 import com.walkary.models.dto.request.pin.PinEditor;
+import com.walkary.models.dto.response.pin.AllDatePinResponse;
+import com.walkary.models.dto.response.pin.AllMainPinsResponse;
 import com.walkary.models.dto.response.pin.PinResponse;
 import com.walkary.models.entity.PointMap;
 import com.walkary.models.entity.UserEntity;
@@ -17,8 +19,13 @@ import java.sql.Timestamp;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.Comparator;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
+
+import static com.walkary.models.SortType.LATEST;
 
 @Service
 @RequiredArgsConstructor
@@ -92,5 +99,27 @@ public class PointMapService {
                         point.getCreatedAt().toLocalDateTime().toLocalTime().format(DateTimeFormatter.ofPattern("HH:mm"))
                 )
         ).collect(Collectors.toList());
+    }
+
+    public LinkedHashMap<String, List<AllDatePinResponse>> getAllDateMaps(final String userId, final SortType sortType) {
+        List<AllDatePinResponse> allDatePinResponses = repository.findAllByUserId(userId, Sort.by(Sort.Direction.DESC, "id")).stream().map(point ->
+                new AllDatePinResponse(
+                        point.getId(),
+                        point.getContent(),
+                        point.getPoint().getX(),
+                        point.getPoint().getY(),
+                        point.getCreatedAt().toLocalDateTime().toLocalDate().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")),
+                        point.getCreatedAt().toLocalDateTime().toLocalTime().format(DateTimeFormatter.ofPattern("HH:mm"))
+                )
+        ).collect(Collectors.toList());
+
+        // 날짜별로 리스트 정렬
+        allDatePinResponses.sort(sortType.equals(LATEST)
+                ? Comparator.comparing(AllDatePinResponse::date).reversed()
+                : Comparator.comparing(AllDatePinResponse::date));
+
+        // 날짜별로 그룹화
+        return allDatePinResponses.stream()
+                .collect(Collectors.groupingBy(AllDatePinResponse::date, LinkedHashMap::new, Collectors.toList()));
     }
 }

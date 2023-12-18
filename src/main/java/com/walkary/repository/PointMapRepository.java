@@ -14,4 +14,5 @@ public interface PointMapRepository extends CrudRepository<PointMap, Long> {
 
     List<PointMap> findAllByUserIdAndDate(String userId, LocalDate date, Sort sort);
 
+    List<PointMap> findAllByUserId(String userId, Sort sort);
 }
