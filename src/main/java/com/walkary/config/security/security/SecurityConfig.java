@@ -46,8 +46,8 @@ public class SecurityConfig {
         corsConfiguration.setAllowCredentials(true);
         corsConfiguration.addAllowedHeader("*");
         corsConfiguration.setAllowedMethods(Arrays.asList("HEAD", "GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"));
-        corsConfiguration.setAllowedOriginPatterns(Arrays.asList("http://*.walkary.fun", "https://*.walkary.fun", "http://localhost:5173", "https://localhost:5173"));
-        corsConfiguration.setExposedHeaders(Arrays.asList("Authorization", "Set-Cookie"));
+        corsConfiguration.setAllowedOriginPatterns(Arrays.asList("http://*.walkary.fun", "https://*.walkary.fun", "http://localhost:5173", "https://localhost:5173", "http://mywalkarybucket.s3-website.ap-northeast-2.amazonaws.com"));
+        corsConfiguration.addExposedHeader("Authorization");
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", corsConfiguration);
         return source;
