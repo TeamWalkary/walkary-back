@@ -1,10 +1,10 @@
 package com.walkary.controller;
 
 import com.walkary.models.dto.MessageResponse;
-import com.walkary.models.dto.request.DiaryCreate;
-import com.walkary.models.dto.request.DiaryEdit;
-import com.walkary.models.dto.response.DiaryListResponse;
-import com.walkary.models.dto.response.DiaryResponse;
+import com.walkary.models.dto.request.diary.DiaryCreate;
+import com.walkary.models.dto.request.diary.DiaryEdit;
+import com.walkary.models.dto.response.diary.DiaryListResponse;
+import com.walkary.models.dto.response.diary.DiaryResponse;
 import com.walkary.service.DiaryService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

@@ -1,5 +1,6 @@
 package com.walkary.config.security.security;
 
+import com.walkary.config.security.security.jwt.JwtAuthEntryPoint;
 import com.walkary.config.security.security.jwt.JwtFilter;
 import com.walkary.config.security.security.jwt.JwtProvider;
 import lombok.RequiredArgsConstructor;
@@ -9,13 +10,12 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.web.access.ExceptionTranslationFilter;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import java.util.Arrays;
-import java.util.Collections;
 
 @Configuration
 @EnableWebSecurity
@@ -23,6 +23,7 @@ import java.util.Collections;
 public class SecurityConfig {
 
     private final JwtProvider jwtProvider;
+    private final JwtAuthEntryPoint jwtAuthEntryPoint;
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
@@ -34,7 +35,9 @@ public class SecurityConfig {
                 .antMatchers("/apis/login", "/apis/signup").permitAll()
                 .anyRequest().authenticated()
                 .and()
-                .addFilterBefore(new JwtFilter(jwtProvider), UsernamePasswordAuthenticationFilter.class)
+                .addFilterBefore(new JwtFilter(jwtProvider), ExceptionTranslationFilter.class)
+                .httpBasic()
+                .authenticationEntryPoint(jwtAuthEntryPoint).and()
                 .build();
     }
 

@@ -1,4 +1,4 @@
-package com.walkary.models.dto;
+package com.walkary.models.dto.response.pin;
 
 import org.springframework.format.annotation.DateTimeFormat;
 

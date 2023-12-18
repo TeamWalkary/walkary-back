@@ -1,6 +1,6 @@
 package com.walkary.service;
 
-import com.walkary.models.dto.request.DiaryEdit;
+import com.walkary.models.dto.request.diary.DiaryEdit;
 import com.walkary.models.entity.Diary;
 import com.walkary.repository.DiaryRepository;
 import org.junit.jupiter.api.Assertions;
@@ -21,11 +21,6 @@ class DiaryServiceTest {
 
     @Autowired
     private DiaryRepository diaryRepository;
-
-    @BeforeEach
-    void clean() {
-        diaryRepository.deleteAll();
-    }
 
     @Test
     @DisplayName("글 내용 수정")

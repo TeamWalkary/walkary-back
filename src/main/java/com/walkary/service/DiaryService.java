@@ -1,11 +1,11 @@
 package com.walkary.service;
 
 import com.walkary.models.dto.DiaryWithAttachmentDTO;
-import com.walkary.models.dto.request.DiaryCreate;
-import com.walkary.models.dto.request.DiaryEdit;
-import com.walkary.models.dto.request.DiaryEditor;
-import com.walkary.models.dto.response.DiaryListResponse;
-import com.walkary.models.dto.response.DiaryResponse;
+import com.walkary.models.dto.request.diary.DiaryCreate;
+import com.walkary.models.dto.request.diary.DiaryEdit;
+import com.walkary.models.dto.request.diary.DiaryEditor;
+import com.walkary.models.dto.response.diary.DiaryListResponse;
+import com.walkary.models.dto.response.diary.DiaryResponse;
 import com.walkary.models.entity.Diary;
 import com.walkary.models.entity.DiaryMedia;
 import com.walkary.models.entity.UserEntity;

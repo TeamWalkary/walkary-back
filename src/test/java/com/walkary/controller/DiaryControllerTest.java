@@ -1,8 +1,7 @@
 package com.walkary.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.walkary.models.dto.request.DiaryCreate;
-import com.walkary.models.dto.request.DiaryEdit;
+import com.walkary.models.dto.request.diary.DiaryEdit;
 import com.walkary.models.entity.Diary;
 import com.walkary.repository.DiaryRepository;
 import org.junit.jupiter.api.BeforeEach;
@@ -35,12 +34,6 @@ class DiaryControllerTest {
 
     @Autowired
     private DiaryRepository diaryRepository;
-
-
-    @BeforeEach
-    void clean() {
-        diaryRepository.deleteAll();
-    }
 
     //일기 작성 테스트
 //    @Test

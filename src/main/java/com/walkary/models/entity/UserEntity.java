@@ -2,9 +2,9 @@ package com.walkary.models.entity;
 
 
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
@@ -16,7 +16,7 @@ import java.sql.Timestamp;
 
 @Entity
 @Getter
-@Builder
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "user")
@@ -28,8 +28,18 @@ public class UserEntity {
 
     @Column
     private String password;
+
     @Column
     private String nickname;
+
+    @Column
+    private String email;
+
+    @Column
+    private String phone;
+
+    @Column
+    private String token;
 
     @Column
     @CreationTimestamp
@@ -39,9 +49,20 @@ public class UserEntity {
     @UpdateTimestamp
     private Timestamp updatedAt;
 
-    @Builder
-    public UserEntity(String password, String nickname) {
-        this.password = password;
-        this.nickname = nickname;
+    public static UserEntity login(String id, String password) {
+        UserEntity user = new UserEntity();
+        user.id = id;
+        user.password = password;
+        return user;
+    }
+
+    public static UserEntity signup(String id, String password, String nickname, String email, String phone) {
+        UserEntity user = new UserEntity();
+        user.id = id;
+        user.password = password;
+        user.nickname = nickname;
+        user.email = email;
+        user.phone = phone;
+        return user;
     }
 }

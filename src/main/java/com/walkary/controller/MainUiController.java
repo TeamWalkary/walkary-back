@@ -2,7 +2,7 @@ package com.walkary.controller;
 
 import com.walkary.config.security.security.jwt.JwtProvider;
 import com.walkary.models.SortType;
-import com.walkary.models.dto.MainPinsResponse;
+import com.walkary.models.dto.response.pin.MainPinsResponse;
 import com.walkary.service.PointMapService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.servlet.http.HttpServletRequest;
 import java.time.DateTimeException;
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 
 @RestController
 @RequiredArgsConstructor

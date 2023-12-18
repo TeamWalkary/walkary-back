@@ -1,11 +1,12 @@
 package com.walkary.service;
 
-import com.walkary.config.security.security.jwt.JwtDto;
-import com.walkary.models.dto.UserDto;
+import com.walkary.config.security.security.jwt.JwtToken;
+import com.walkary.models.dto.request.UserLoginRequest;
+import com.walkary.models.dto.request.UserSignupRequest;
 
 public interface UserService {
 
-    JwtDto login(UserDto userDto);
+    JwtToken login(UserLoginRequest userDto);
 
-    String signup(UserDto userDto);
+    String signup(UserSignupRequest userDto);
 }

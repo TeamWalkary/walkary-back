@@ -1,4 +1,4 @@
-package com.walkary.models.dto.response;
+package com.walkary.models.dto.response.diary;
 
 import com.walkary.models.entity.Diary;
 import com.walkary.models.entity.DiaryMedia;
