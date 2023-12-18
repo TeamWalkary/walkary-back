@@ -1,6 +1,6 @@
 package com.walkary.models.entity;
 
-import com.walkary.models.dto.request.DiaryEditor;
+import com.walkary.models.dto.request.diary.DiaryEditor;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
