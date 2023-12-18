@@ -8,8 +8,6 @@
 | :--: | :-----------------------------------: | :---: |
 | POST  | /apis/signup-----------------------: |   X   |
 
-> DB 저장 x
-
 ### Request
 
 ```json
@@ -265,3 +263,265 @@ HTTP Status 500 – Internal Server Error [페이지]
 
 - 삭제 실패 [500 Internal Server Error]
   서버 내부 오류
+
+# 핀 API
+
+## 핀 생성 API
+
+| TYPE |                  URL                  | TOKEN |
+| :--: | :-----------------------------------: | :---: |
+| POST  | /apis/pin-----------------------: |   X   |
+
+### Request
+> 필수 요건 : Header의 Authorization에 Bearer XXX 토큰 넣어야 함
+>   
+```json
+{
+    "contents": "장소",
+    "latitude": 123.1233,
+    "longitude": 23.22232
+}
+
+```
+장소, 위도, 경도
+
+### Response
+
+- 핀 생성 성공 [200 OK]
+
+```json
+{
+    "message": "핀이 생성되었습니다."
+}
+```
+
+- 실패 
+403 Forbidden : 토큰 만료 혹은 부재
+
+- 실패 [500 Internal Sever Error]
+  서버 내부 오류
+
+<br />
+
+## 핀 메인화면 API
+
+| TYPE |                  URL                  | TOKEN |
+| :--: | :-----------------------------------: | :---: |
+| POST  | /apis/main/maps-pin?date=yyyyMMdd&sortBy=LATEST-----------------------: |   X   |
+
+### Request
+> 필수 요건 : Header의 Authorization에 Bearer XXX 토큰 넣어야 함
+> 예시 : /apis/main/maps-pin?date=20231023&sortBy=LATEST
+> date 부재 시 default값은 오늘.
+> LATEST 핀 id순 OLDEST는 핀id 역순 default값은 역순
+
+
+### Response
+
+- 핀 메인화면 성공 [200 OK]
+
+```json
+{
+    "pins": [
+        {
+            "id": 핀id,
+            "contents": "콘텐츠",
+            "latitude": 위도,
+            "longitude": 경도,
+            "stampTime": "핀 작성 시간"
+        }
+    ]
+}
+```
+
+- 핀 메인화면 성공[200 OK]
+값 없을 때
+```json
+{
+    "pins": {}
+}
+```
+
+- 실패 
+403 Forbidden : 토큰 만료 혹은 부재
+
+- 실패 [500 Internal Sever Error]
+  서버 내부 오류
+
+<br />
+
+## 핀 수정 API
+
+| TYPE |                  URL                  | TOKEN |
+| :--: | :-----------------------------------: | :---: |
+| PATCH  | /apis/pin-----------------------: |   X   |
+
+### Request
+> 필수 요건 : Header의 Authorization에 Bearer XXX 토큰 넣어야 함
+>   
+```json
+{
+    "id": 619,
+    "contents": "수정된 컨텐츠",
+    "latitude": 123.1233,
+    "longitude": 23.22232
+}
+
+```
+핀ID, 수정된 컨텐츠, 위도, 경도
+
+### Response
+
+- 핀 생성 성공 [200 OK]
+
+```json
+{
+    "message": "핀이 수정되었습니다."
+}
+```
+
+- 실패 잘못된 핀ID 입력
+```json
+{
+    "message": "존재하지 않는 핀입니다"
+}
+```
+
+- 실패 403 Forbidden
+- 토큰 만료 혹은 부재
+
+- 실패 [500 Internal Sever Error]
+  서버 내부 오류
+
+<br />
+
+## 핀 삭제 API
+
+| TYPE |                  URL                  | TOKEN |
+| :--: | :-----------------------------------: | :---: |
+| DELETE  | /apis/pin/{pinId}-----------------------: |   X   |
+
+### Request
+> 필수 요건 : Header의 Authorization에 Bearer XXX 토큰 넣어야 함
+> 삭제할 pinId를 URL에 기입해야 함
+
+### Response
+
+- 핀 삭제 성공 [200 OK]
+
+```json
+{
+    "message": "핀이 삭제되었습니다."
+}
+```
+
+- 실패 잘못된 핀ID 입력
+```json
+{
+    "message": "핀 삭제하기 실패"
+}
+```
+
+- 실패 사용자가 핀 생성한 사람이 아닐 때
+```json
+{
+    "message": "핀 작성자와 현 사용자의 아이디가 동일하지 않습니다"
+}
+```
+
+- 실패 403 Forbidden
+- 토큰 만료 혹은 부재
+
+- 실패 [500 Internal Sever Error]
+  서버 내부 오류
+
+<br />
+
+## 핀 모아보기 API
+
+| TYPE |                  URL                  | TOKEN |
+| :--: | :-----------------------------------: | :---: |
+| GET  | /apis/pin-----------------------: |   X   |
+
+### Request
+> 필수 요건 : Header의 Authorization에 Bearer XXX 토큰 넣어야 함
+> 예시 : /apis/pin?sortBy=LATEST
+> 날짜 최신순은 LATEST, 오래된 순은 OLDEST로 지정
+> 디폴트 값은 OLDEST
+
+### Response
+
+- 핀 모아보기 성공 [200 OK]
+
+```json
+{
+    "pins": {
+        "2023-12-18": [
+            {
+                "id": 핀ID,
+                "contents": "콘텐츠",
+                "latitude": 위도,
+                "longitude": 경도,
+                "date": "날짜",
+                "stampTime": "시간"
+            },
+            {
+                "id": 핀ID,
+                "contents": "콘텐츠",
+                "latitude": 위도,
+                "longitude": 경도,
+                "date": "날짜",
+                "stampTime": "시간"
+            }
+        ],
+        "2023-12-12": [
+            {
+                "id": 핀ID,
+                "contents": "콘텐츠",
+                "latitude": 위도,
+                "longitude": 경도,
+                "date": "날짜",
+                "stampTime": "시간"
+            },
+            {
+                "id": 핀ID,
+                "contents": "콘텐츠",
+                "latitude": 위도,
+                "longitude": 경도,
+                "date": "날짜",
+                "stampTime": "시간"
+            },
+            {
+                "id": 핀ID,
+                "contents": "콘텐츠",
+                "latitude": 위도,
+                "longitude": 경도,
+                "date": "날짜",
+                "stampTime": "시간"
+            },
+            {
+                "id": 핀ID,
+                "contents": "콘텐츠",
+                "latitude": 위도,
+                "longitude": 경도,
+                "date": "날짜",
+                "stampTime": "시간"
+            }
+        ],
+```
+
+- 핀 모아보기 조회 성공[200OK]
+값 없을 때
+```json
+{
+    "pins": {}
+}
+```
+
+- 실패 403 Forbidden
+- 토큰 만료 혹은 부재
+
+- 실패 [500 Internal Sever Error]
+  서버 내부 오류
+
+<br />
