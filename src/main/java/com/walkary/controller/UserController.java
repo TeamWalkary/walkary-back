@@ -31,7 +31,7 @@ public class UserController {
         headers.add(HttpHeaders.AUTHORIZATION, jwtToken.accessToken());
         ResponseCookie cookie = ResponseCookie.from("refreshAuthorization", jwtToken.refreshToken())
                 .path("/")
-                .domain(".walkary.fun")
+                .domain("mywalkarybucket.s3-website.ap-northeast-2.amazonaws.com")
                 .sameSite("None")
                 .httpOnly(true)
                 .secure(true)
