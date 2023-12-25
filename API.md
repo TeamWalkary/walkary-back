@@ -95,12 +95,8 @@ phoneNumber
 ### Response
 
 - 로그인 성공(토큰 발급) [200 OK]
+login success
 
-```json
-{
-    "token": "Bearer XXXXX"
-}
-```
 
 - 로그인 실패(잘못된 id 혹은 패스워드) [400 Bad Request]
 
@@ -131,21 +127,14 @@ phoneNumber
 }
 ```
 
-> 필수 요건 : Header의 Authorization에 Bearer XXX 토큰 넣어야 함
-
-
 ### Response
 
 - 일기 작성 성공 [200 OK]
-
-login success
+{
+    "message": "일기가 작성되었습니다."
+}
 
 - 일기 작성 실패(토큰 만료) [향후 수정 필요]
-
-```json
-{
-}
-```
 403 Forbidden
 
 - 일기 작성 실패 [500 Internal Server Error]
@@ -159,7 +148,6 @@ login success
 ### Request
 
 ```
-> 필수 요건 : Header의 Authorization에 Bearer XXX 토큰 넣어야 함
 > 예시 : /apis/main/diary?date=20231127
 > 해당하는 날짜 필요
 ```
@@ -199,11 +187,11 @@ login success
 ### Request
 
 ```
-> 필수 요건 : Header의 Authorization에 Bearer XXX 토큰 넣어야 함
-> 예시 : /apis/collect/diary?limit=5&offset=0&sortBy=latest
+> 예시 : /apis/collect/diary?limit=5&offset=0&sortBy=latest&search=20231201-20231231
 > limit 조회 사이즈
 > offset 시작 페이지
 > sortBy=latest 최신순, 없으면 작성 순서대로 (기준값은 date)
+> search=20231201-20231231 검색할 때 startDate와 EndDate 표시. 구분자는 '-'
 ```
 
 ### Response
@@ -243,7 +231,6 @@ login success
 
 ### Request
 
-> 필수 요건 : Header의 Authorization에 Bearer XXX 토큰 넣어야 함
 > 예시 : /apis/diary/471
 > diaryId에 수정해야 할 해당 diaryId를 넣어야 함.
 ``` json
@@ -272,7 +259,6 @@ HTTP Status 500 – Internal Server Error [페이지]
 | GET | /apis/main/diary/{diaryId} |   O   |
 
 ### Request
-> 필수 요건 : Header의 Authorization에 Bearer XXX 토큰 넣어야 함
 > 삭제할 diaryId를 URL에 기입해야 함
 
 ### Response
@@ -303,8 +289,7 @@ HTTP Status 500 – Internal Server Error [페이지]
 | POST  | /apis/pin-----------------------: |   X   |
 
 ### Request
-> 필수 요건 : Header의 Authorization에 Bearer XXX 토큰 넣어야 함
->   
+
 ```json
 {
     "contents": "장소",
@@ -340,11 +325,9 @@ HTTP Status 500 – Internal Server Error [페이지]
 | POST  | /apis/main/maps-pin?date=yyyyMMdd&sortBy=LATEST-----------------------: |   X   |
 
 ### Request
-> 필수 요건 : Header의 Authorization에 Bearer XXX 토큰 넣어야 함
 > 예시 : /apis/main/maps-pin?date=20231023&sortBy=LATEST
 > date 부재 시 default값은 오늘.
 > LATEST 핀 id순 OLDEST는 핀id 역순 default값은 역순
-
 
 ### Response
 
@@ -387,8 +370,6 @@ HTTP Status 500 – Internal Server Error [페이지]
 | PATCH  | /apis/pin-----------------------: |   X   |
 
 ### Request
-> 필수 요건 : Header의 Authorization에 Bearer XXX 토큰 넣어야 함
->   
 ```json
 {
     "id": 619,
@@ -432,7 +413,6 @@ HTTP Status 500 – Internal Server Error [페이지]
 | DELETE  | /apis/pin/{pinId}-----------------------: |   X   |
 
 ### Request
-> 필수 요건 : Header의 Authorization에 Bearer XXX 토큰 넣어야 함
 > 삭제할 pinId를 URL에 기입해야 함
 
 ### Response
@@ -474,7 +454,6 @@ HTTP Status 500 – Internal Server Error [페이지]
 | GET  | /apis/pin-----------------------: |   X   |
 
 ### Request
-> 필수 요건 : Header의 Authorization에 Bearer XXX 토큰 넣어야 함
 > 예시 : /apis/pin?sortBy=LATEST
 > 날짜 최신순은 LATEST, 오래된 순은 OLDEST로 지정
 > 디폴트 값은 OLDEST
@@ -550,6 +529,45 @@ HTTP Status 500 – Internal Server Error [페이지]
 
 - 실패 403 Forbidden
 - 토큰 만료 혹은 부재
+
+- 실패 [500 Internal Sever Error]
+  서버 내부 오류
+
+# 달력 API
+
+## 월별 일기·핀 유무 확인 API
+| TYPE |                  URL                  | TOKEN |
+| :--: | :-----------------------------------: | :---: |
+| GET  | /apis/calendar/check?date=yyyyMMdd--: |   X  
+
+### Request
+> 예시 : /apis/calendar/check?date=20231201
+> 해당하는 월에 일기 또는 핀이 있는지 확인해주는 기능
+> date에 202312 외에 날짜도 기입해줘야 함 우선 첫 번째 날짜인 01로 통일
+
+### Response
+달력 체크 성공 [200 OK]
+① 값이 있을 때
+```json
+{
+    "diaryDay": "4, 5, 25",
+    "pinDay": "11, 12, 20"
+}
+```
+diaryDay는 해당 월에 일기가 있는 날 pinDay는 핀이 있는 날짜
+
+② 값이 없을 때
+```json
+{
+    "diaryDay": "",
+    "pinDay": ""
+}
+```
+- 실패 400 BadRequest
+  URL 요청을 잘못 보냈을 때
+
+- 실패 403 Forbidden
+  토큰 만료 혹은 부재
 
 - 실패 [500 Internal Sever Error]
   서버 내부 오류
