@@ -3,6 +3,7 @@ package com.walkary.controller;
 import com.walkary.config.security.security.jwt.JwtProvider;
 import com.walkary.models.dto.MessageResponse;
 import com.walkary.models.dto.response.calendar.CalendarResponse;
+import com.walkary.service.CalendarService;
 import com.walkary.service.DiaryService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -25,7 +26,7 @@ import java.util.List;
 @RequestMapping("/apis/calendar")
 public class CalendarController {
 
-    private final DiaryService diaryService;
+    private final CalendarService calendarService;
 
     @GetMapping("/check")
     @PreAuthorize("hasRole(ROLE_USER)")
@@ -37,8 +38,7 @@ public class CalendarController {
             return ResponseEntity.badRequest().body(new MessageResponse("해당하는 연도와 월을 보내주세요"));
         }
 
-        CalendarResponse response = diaryService.check(date, userId);
-        System.out.println("response = " + response);
+        CalendarResponse response = calendarService.check(date, userId);
 
         return ResponseEntity.ok().body(response);
     }

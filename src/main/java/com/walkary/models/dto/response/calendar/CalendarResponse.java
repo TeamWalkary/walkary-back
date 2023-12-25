@@ -5,10 +5,12 @@ import lombok.Getter;
 
 @Getter
 public class CalendarResponse {
-    private final String day;
+    private final String diaryDay;
+    private final String pinDay;
 
     @Builder
-    public CalendarResponse(String day) {
-        this.day = day;
+    public CalendarResponse(String diaryDay, String pinDay) {
+        this.diaryDay = diaryDay;
+        this.pinDay = pinDay;
     }
 }

@@ -4,7 +4,6 @@ import com.walkary.models.dto.DiaryWithAttachmentDTO;
 import com.walkary.models.dto.request.diary.DiaryCreate;
 import com.walkary.models.dto.request.diary.DiaryEdit;
 import com.walkary.models.dto.request.diary.DiaryEditor;
-import com.walkary.models.dto.response.calendar.CalendarResponse;
 import com.walkary.models.dto.response.diary.DiaryListResponse;
 import com.walkary.models.dto.response.diary.DiaryResponse;
 import com.walkary.models.entity.Diary;
@@ -140,20 +139,5 @@ public class DiaryService {
 
         diaryMediaRepository.deleteByDiaryId(diary.getId());
         diaryRepository.delete(diary);
-    }
-
-    //달력 체크(일기)
-    @Transactional
-    public CalendarResponse check(LocalDate date, String userId) {
-        int year = date.getYear();
-        int month = date.getMonthValue();
-
-        List<Integer> days = diaryRepository.findByMonth(year, month, userId);
-
-        String dayString = days.stream()
-                .map(String::valueOf)
-                .collect(Collectors.joining(", "));
-
-        return CalendarResponse.builder().day(dayString).build();
     }
 }
