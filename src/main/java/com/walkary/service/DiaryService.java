@@ -4,6 +4,7 @@ import com.walkary.models.dto.DiaryWithAttachmentDTO;
 import com.walkary.models.dto.request.diary.DiaryCreate;
 import com.walkary.models.dto.request.diary.DiaryEdit;
 import com.walkary.models.dto.request.diary.DiaryEditor;
+import com.walkary.models.dto.response.calendar.CalendarResponse;
 import com.walkary.models.dto.response.diary.DiaryListResponse;
 import com.walkary.models.dto.response.diary.DiaryResponse;
 import com.walkary.models.entity.Diary;
@@ -38,7 +39,8 @@ public class DiaryService {
     //일기 작성
     @Transactional
     public void write(DiaryCreate diaryCreate) {
-        UserEntity user = userRepository.findById(diaryCreate.getUserId()).orElseThrow(() -> new IllegalArgumentException("유저가 존재하지 않습니다"));
+        UserEntity user = userRepository.findById(diaryCreate.getUserId())
+                .orElseThrow(() -> new IllegalArgumentException("유저가 존재하지 않습니다"));
 
         Diary diary = Diary.builder()
                 .title(diaryCreate.getTitle())
@@ -114,7 +116,8 @@ public class DiaryService {
     }
 
     public DiaryResponse findDiaryByDate(String userId, LocalDate date) {
-        Diary diary = diaryRepository.findByDate(userId, date);
+        Diary diary = diaryRepository.findByDateAndUserId(userId, date)
+                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 글입니다"));
 
         if (diary == null) {
             return DiaryResponse.builder().build();
@@ -133,9 +136,24 @@ public class DiaryService {
     @Transactional
     public void delete(Long id) {
         Diary diary = diaryRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("존재하지 않은 글입니다"));
+                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 글입니다"));
 
         diaryMediaRepository.deleteByDiaryId(diary.getId());
         diaryRepository.delete(diary);
+    }
+
+    //달력 체크(일기)
+    @Transactional
+    public CalendarResponse check(LocalDate date, String userId) {
+        int year = date.getYear();
+        int month = date.getMonthValue();
+
+        List<Integer> days = diaryRepository.findByMonth(year, month, userId);
+
+        String dayString = days.stream()
+                .map(String::valueOf)
+                .collect(Collectors.joining(", "));
+
+        return CalendarResponse.builder().day(dayString).build();
     }
 }
