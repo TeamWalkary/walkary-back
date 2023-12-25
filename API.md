@@ -203,7 +203,7 @@ login success
 > 예시 : /apis/collect/diary?limit=5&offset=0&sortBy=latest
 > limit 조회 사이즈
 > offset 시작 페이지
-> sortBy=latest 최신순, 없으면 작성 순서대로 (기준값은 diaryId)
+> sortBy=latest 최신순, 없으면 작성 순서대로 (기준값은 date)
 ```
 
 ### Response
