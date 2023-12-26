@@ -20,4 +20,6 @@ public interface DiaryRepository extends JpaRepository<Diary, Long> {
 
     @Query("SELECT NEW com.walkary.models.dto.DiaryWithAttachmentDTO(d.id, d.date, d.title, d.content, dm.attachment) FROM Diary d LEFT JOIN d.diaryMedia dm WHERE d.user.id = :userId")
     Page<DiaryWithAttachmentDTO> findDiariesWithMediaByUserId(Pageable pageable, @Param("userId") String userId);
+
+    boolean existsByDate(LocalDate date);
 }

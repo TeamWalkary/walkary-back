@@ -40,19 +40,23 @@ public class DiaryService {
     public void write(DiaryCreate diaryCreate) {
         UserEntity user = userRepository.findById(diaryCreate.getUserId()).orElseThrow(() -> new IllegalArgumentException("유저가 존재하지 않습니다"));
 
-        Diary diary = Diary.builder()
-                .title(diaryCreate.getTitle())
-                .content(diaryCreate.getContent())
-                .date(diaryCreate.getDate() != null ? diaryCreate.getDate() : LocalDate.now())
-                .user(user)
-                .build();
-        diaryRepository.save(diary);
+        if (!diaryRepository.existsByDate(LocalDate.now())) {
+            Diary diary = Diary.builder()
+                    .title(diaryCreate.getTitle())
+                    .content(diaryCreate.getContent())
+                    .date(diaryCreate.getDate() != null ? diaryCreate.getDate() : LocalDate.now())
+                    .user(user)
+                    .build();
+            diaryRepository.save(diary);
 
-        DiaryMedia diaryMedia = DiaryMedia.builder()
-                .attachment(diaryCreate.getImage().getBytes(StandardCharsets.UTF_8))
-                .diary(diary)
-                .build();
-        diaryMediaRepository.save(diaryMedia);
+            DiaryMedia diaryMedia = DiaryMedia.builder()
+                    .attachment(diaryCreate.getImage().getBytes(StandardCharsets.UTF_8))
+                    .diary(diary)
+                    .build();
+            diaryMediaRepository.save(diaryMedia);
+        } else {
+            throw new IllegalArgumentException("일기는 하루에 하나만 작성할 수 있습니다");
+        }
     }
 
     //일기 모아보기
