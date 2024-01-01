@@ -52,7 +52,7 @@ public class JwtFilter extends GenericFilterBean {
                     userEntity.setToken(refresh);
                     ResponseCookie cookie = ResponseCookie.from("refreshAuthorization", refresh)
                             .path("/")
-                            .domain("mywalkarybucket.s3-website.ap-northeast-2.amazonaws.com")
+                            .domain("walkary.site")
                             .sameSite("None")
                             .httpOnly(true)
                             .secure(true)
