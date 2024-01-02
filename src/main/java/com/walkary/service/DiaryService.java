@@ -56,10 +56,28 @@ public class DiaryService {
         diaryMediaRepository.save(diaryMedia);
     }
 
-    //일기 모아보기
+    //일기 모아보기(검색 날짜 없음)
     @Transactional
     public List<DiaryListResponse> findListByUserId(Pageable pageable, String userId) {
         Page<DiaryWithAttachmentDTO> diaryPage = diaryRepository.findDiariesWithMediaByUserId(pageable, userId);
+
+        return diaryPage
+                .getContent()
+                .stream()
+                .map(diaryDto -> DiaryListResponse.builder()
+                        .id(diaryDto.getId())
+                        .date(diaryDto.getDate())
+                        .title(diaryDto.getTitle())
+                        .content(diaryDto.getContent())
+                        .image(diaryDto.getAttachment())
+                        .build())
+                .collect(Collectors.toList());
+    }
+
+    //일기 모아보기(검색 날짜 유)
+    @Transactional
+    public List<DiaryListResponse> findListByUserIdAndDate(Pageable pageable, String userId, LocalDate startDate, LocalDate endDate) {
+        Page<DiaryWithAttachmentDTO> diaryPage = diaryRepository.findDiariesWithMediaByUserIdAndDate(pageable, userId, startDate, endDate);
 
         return diaryPage
                 .getContent()
