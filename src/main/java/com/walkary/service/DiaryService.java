@@ -38,7 +38,8 @@ public class DiaryService {
     //일기 작성
     @Transactional
     public void write(DiaryCreate diaryCreate) {
-        UserEntity user = userRepository.findById(diaryCreate.getUserId()).orElseThrow(() -> new IllegalArgumentException("유저가 존재하지 않습니다"));
+        UserEntity user = userRepository.findById(diaryCreate.getUserId())
+                .orElseThrow(() -> new IllegalArgumentException("유저가 존재하지 않습니다"));
 
         if (!diaryRepository.existsByDate(LocalDate.now())) {
             Diary diary = Diary.builder()
@@ -59,10 +60,28 @@ public class DiaryService {
         }
     }
 
-    //일기 모아보기
+    //일기 모아보기(검색 날짜 없음)
     @Transactional
     public List<DiaryListResponse> findListByUserId(Pageable pageable, String userId) {
         Page<DiaryWithAttachmentDTO> diaryPage = diaryRepository.findDiariesWithMediaByUserId(pageable, userId);
+
+        return diaryPage
+                .getContent()
+                .stream()
+                .map(diaryDto -> DiaryListResponse.builder()
+                        .id(diaryDto.getId())
+                        .date(diaryDto.getDate())
+                        .title(diaryDto.getTitle())
+                        .content(diaryDto.getContent())
+                        .image(diaryDto.getAttachment())
+                        .build())
+                .collect(Collectors.toList());
+    }
+
+    //일기 모아보기(검색 날짜 유)
+    @Transactional
+    public List<DiaryListResponse> findListByUserIdAndDate(Pageable pageable, String userId, LocalDate startDate, LocalDate endDate) {
+        Page<DiaryWithAttachmentDTO> diaryPage = diaryRepository.findDiariesWithMediaByUserIdAndDate(pageable, userId, startDate, endDate);
 
         return diaryPage
                 .getContent()
@@ -118,7 +137,8 @@ public class DiaryService {
     }
 
     public DiaryResponse findDiaryByDate(String userId, LocalDate date) {
-        Diary diary = diaryRepository.findByDate(userId, date);
+        Diary diary = diaryRepository.findByDateAndUserId(userId, date)
+                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 글입니다"));
 
         if (diary == null) {
             return DiaryResponse.builder().build();
@@ -137,7 +157,7 @@ public class DiaryService {
     @Transactional
     public void delete(Long id) {
         Diary diary = diaryRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("존재하지 않은 글입니다"));
+                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 글입니다"));
 
         diaryMediaRepository.deleteByDiaryId(diary.getId());
         diaryRepository.delete(diary);

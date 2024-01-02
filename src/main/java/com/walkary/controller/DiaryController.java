@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
 import java.util.List;
 
@@ -67,21 +68,44 @@ public class DiaryController {
     //일기 모아보기
     @GetMapping("/collect/diary")
     @PreAuthorize("hasRole(ROLE_USER)")
-    public ResponseEntity<List<DiaryListResponse>> findListByUserId(
-            @RequestParam(name = "limit") String limit,
-            @RequestParam(name = "offset") String offset,
-            @RequestParam(name = "sortBy") String sortBy,
+    public ResponseEntity<List<DiaryListResponse>> findListByUserIdAndDate(
+            @RequestParam(name = "limit", required = false) String limit,
+            @RequestParam(name = "offset", required = false) String offset,
+            @RequestParam(name = "sortBy", required = false) String sortBy,
+            @RequestParam(name = "search", required = false) String searchParam,
             HttpServletRequest request) {
 
         String userId = extractUserId(request);
+
+        //페이지 세팅
         int page = (offset != null) ? Integer.parseInt(offset) : 0;
         int size = (limit != null) ? Integer.parseInt(limit) : 5;
 
-        Sort sort = (sortBy.equals("latest")) ? Sort.by(Sort.Order.desc("id")) : Sort.by(Sort.Order.asc("id"));
+        Sort sort = (sortBy != null && sortBy.equals("latest")) ? Sort.by(Sort.Order.desc("date")) : Sort.by(Sort.Order.asc("date"));
         Pageable pageable = PageRequest.of(page, size, sort);
 
-        List<DiaryListResponse> diaryList = diaryService.findListByUserId(pageable, userId);
         try {
+            List<DiaryListResponse> diaryList;
+
+            if (searchParam != null && !searchParam.trim().isEmpty()) {
+                //검색 조건이 있을때
+
+                // searchParam 시작날짜, 종료날짜 추출
+                String cleanedString = searchParam.trim().replace("\n", "");
+                int dashIndex = cleanedString.indexOf("-");
+                String startDateStr = cleanedString.substring(0, dashIndex);
+                String endDateStr = cleanedString.substring(dashIndex + 1);
+
+                //날짜 형식 변환
+                LocalDate startDate = LocalDate.parse(startDateStr, DateTimeFormatter.BASIC_ISO_DATE);
+                LocalDate endDate = LocalDate.parse(endDateStr, DateTimeFormatter.BASIC_ISO_DATE);
+
+                diaryList = diaryService.findListByUserIdAndDate(pageable, userId, startDate, endDate);
+            } else {
+                //검색 조건이 없을 때
+                diaryList = diaryService.findListByUserId(pageable, userId);
+            }
+
             return ResponseEntity.ok(diaryList);
         } catch (Exception e) {
             throw new IllegalArgumentException("일기를 조회할 수 없습니다");
