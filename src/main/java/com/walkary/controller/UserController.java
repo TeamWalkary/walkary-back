@@ -29,14 +29,27 @@ public class UserController {
         HttpHeaders headers = new HttpHeaders();
 
         headers.add(HttpHeaders.AUTHORIZATION, jwtToken.accessToken());
-        ResponseCookie cookie = ResponseCookie.from("refreshAuthorization", jwtToken.refreshToken())
+        // 프론트엔드 도메인에 대한 쿠키
+        ResponseCookie frontEndCookie = ResponseCookie.from("refreshAuthorization", jwtToken.refreshToken())
                 .path("/")
                 .domain("walkary.site")
                 .sameSite("None")
                 .httpOnly(true)
                 .secure(true)
                 .build();
-        headers.add(HttpHeaders.SET_COOKIE, cookie.toString());
+
+        // 백엔드 도메인에 대한 쿠키
+        ResponseCookie backEndCookie = ResponseCookie.from("refreshAuthorization", jwtToken.refreshToken())
+                .path("/")
+                .domain("walkary.kro.kr")
+                .sameSite("None")
+                .httpOnly(true)
+                .secure(true)
+                .build();
+
+        // 응답에 각각의 쿠키 추가
+        headers.add(HttpHeaders.SET_COOKIE, frontEndCookie.toString());
+        headers.add(HttpHeaders.SET_COOKIE, backEndCookie.toString());
         return ResponseEntity.ok().headers(headers).body("login success");
     }
 
