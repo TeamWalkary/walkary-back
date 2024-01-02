@@ -50,14 +50,29 @@ public class JwtFilter extends GenericFilterBean {
 
                     String refresh = tokenProvider.newFreshToken(refreshToken, "refresh");
                     userEntity.setToken(refresh);
-                    ResponseCookie cookie = ResponseCookie.from("refreshAuthorization", refresh)
+  
+                    // 프론트엔드 도메인에 대한 쿠키
+                    ResponseCookie frontEndCookie = ResponseCookie.from("refreshAuthorization", refresh)
                             .path("/")
                             .domain("walkary.site")
                             .sameSite("None")
                             .httpOnly(true)
                             .secure(true)
                             .build();
-                    res.addHeader("Set-Cookie", cookie.toString());
+
+                    // 백엔드 도메인에 대한 쿠키
+                    ResponseCookie backEndCookie = ResponseCookie.from("refreshAuthorization", refresh)
+                            .path("/")
+                            .domain("walkary.kro.kr")
+                            .sameSite("None")
+                            .httpOnly(true)
+                            .secure(true)
+                            .build();
+
+                    // 응답에 쿠키 추가
+                    res.addHeader(HttpHeaders.SET_COOKIE, frontEndCookie.toString());
+                    res.addHeader(HttpHeaders.SET_COOKIE, backEndCookie.toString());
+                    
                     log.info("renew refresh & access Token");
                     SecurityContextHolder.getContext().setAuthentication(tokenProvider.getAuthentication(refresh));
                 }
