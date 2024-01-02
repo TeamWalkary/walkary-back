@@ -29,9 +29,12 @@ public interface DiaryRepository extends JpaRepository<Diary, Long> {
             "WHERE d.user.id = :userId ")
     Page<DiaryWithAttachmentDTO> findDiariesWithMediaByUserId(Pageable pageable, @Param("userId") String userId);
 
+    boolean existsByDate(LocalDate date);
+
     @Query("SELECT DAY(d.date) FROM Diary d " +
             "WHERE YEAR(d.date) = :year " +
             "AND MONTH(d.date) = :month " +
             "AND user_id=:userId")
     List<Integer> findByMonth(@Param("year") int year, @Param("month") int month, String userId);
+
 }

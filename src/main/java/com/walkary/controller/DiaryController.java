@@ -42,7 +42,7 @@ public class DiaryController {
             diaryService.write(request);
             return ResponseEntity.ok(new MessageResponse("일기가 작성되었습니다."));
         } catch (Exception e) {
-            return ResponseEntity.badRequest().body(new MessageResponse("일기 작성에 실패하였습니다."));
+            return ResponseEntity.badRequest().body(new MessageResponse(e.getMessage()));
         }
     }
 
