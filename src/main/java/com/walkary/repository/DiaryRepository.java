@@ -28,7 +28,16 @@ public interface DiaryRepository extends JpaRepository<Diary, Long> {
             "FROM Diary d LEFT JOIN d.diaryMedia dm " +
             "WHERE d.user.id = :userId ")
     Page<DiaryWithAttachmentDTO> findDiariesWithMediaByUserId(Pageable pageable, @Param("userId") String userId);
+    
+    //일기모아보기(검색 날짜 있음)
+    @Query("SELECT NEW com.walkary.models.dto.DiaryWithAttachmentDTO(d.id, d.date, d.title, d.content, dm.attachment) " +
+            "FROM Diary d LEFT JOIN d.diaryMedia dm " +
+            "WHERE d.user.id = :userId " +
+            "AND (:startDate IS NULL OR d.date >= :startDate) " +
+            "AND (:endDate IS NULL OR d.date <= :endDate)")
+    Page<DiaryWithAttachmentDTO> findDiariesWithMediaByUserIdAndDate(Pageable pageable, @Param("userId") String userId, LocalDate startDate, LocalDate endDate);
 
+    //그 날짜에 일기 데이터 있는지 확인
     boolean existsByDate(LocalDate date);
 
     @Query("SELECT DAY(d.date) FROM Diary d " +
