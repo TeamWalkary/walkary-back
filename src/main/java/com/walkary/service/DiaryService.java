@@ -41,7 +41,7 @@ public class DiaryService {
         UserEntity user = userRepository.findById(diaryCreate.getUserId())
                 .orElseThrow(() -> new IllegalArgumentException("유저가 존재하지 않습니다"));
 
-        if (!diaryRepository.existsByDate(LocalDate.now())) {
+        if (!diaryRepository.existsByDateAndUserId(LocalDate.now(), diaryCreate.getUserId())) {
             Diary diary = Diary.builder()
                     .title(diaryCreate.getTitle())
                     .content(diaryCreate.getContent())
