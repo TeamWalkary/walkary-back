@@ -38,7 +38,7 @@ public interface DiaryRepository extends JpaRepository<Diary, Long> {
     Page<DiaryWithAttachmentDTO> findDiariesWithMediaByUserIdAndDate(Pageable pageable, @Param("userId") String userId, LocalDate startDate, LocalDate endDate);
 
     //그 날짜에 일기 데이터 있는지 확인
-    boolean existsByDate(LocalDate date);
+    boolean existsByDateAndUserId(LocalDate date, String userId);
 
     @Query("SELECT DAY(d.date) FROM Diary d " +
             "WHERE YEAR(d.date) = :year " +
