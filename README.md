@@ -3,13 +3,13 @@
 # Walkary
 ![KakaoTalk_Image_2023-10-23-21-20-37](https://github.com/TeamWalkary/walkary-back/assets/125977702/846862bb-b75e-4e50-8be8-db1c807f01eb)
 
-- 제작기간 : 2023.10.18~2023.10.23
+- 제작기간 : 2023.10.18~
 - 워커리는 내가 다녀간 장소의 발자취를 따라 일기를 적어보자는 취지의 프로젝트에요
 - 이런 분이 사용하시면 좋아요.
      - 일상을 의미있게 기억하고 싶은 사람
      - 다녀온 장소에 의미를 부여하고 싶은 사람
      - 일기를 쓸 때 오늘 있었던 일이 잘 기억나지 않는 사람
-- https://www.walkary.fun/
+- https://www.walkary.site/
 
 
 ## 기능소개
