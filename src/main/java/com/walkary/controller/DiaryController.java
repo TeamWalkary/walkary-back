@@ -4,6 +4,7 @@ import com.walkary.models.dto.MessageResponse;
 import com.walkary.models.dto.request.diary.DiaryCreate;
 import com.walkary.models.dto.request.diary.DiaryEdit;
 import com.walkary.models.dto.response.diary.DiaryListResponse;
+import com.walkary.models.dto.response.diary.DiaryListWrapper;
 import com.walkary.models.dto.response.diary.DiaryResponse;
 import com.walkary.service.DiaryService;
 import lombok.RequiredArgsConstructor;
@@ -68,7 +69,7 @@ public class DiaryController {
     //일기 모아보기
     @GetMapping("/collect/diary")
     @PreAuthorize("hasRole(ROLE_USER)")
-    public ResponseEntity<List<DiaryListResponse>> findListByUserIdAndDate(
+    public ResponseEntity<DiaryListWrapper> findListByUserIdAndDate(
             @RequestParam(name = "limit", required = false) String limit,
             @RequestParam(name = "offset", required = false) String offset,
             @RequestParam(name = "sortBy", required = false) String sortBy,
@@ -85,7 +86,7 @@ public class DiaryController {
         Pageable pageable = PageRequest.of(page, size, sort);
 
         try {
-            List<DiaryListResponse> diaryList;
+            DiaryListWrapper diaryListWrapper;
 
             if (searchParam != null && !searchParam.trim().isEmpty()) {
                 //검색 조건이 있을때
@@ -100,13 +101,13 @@ public class DiaryController {
                 LocalDate startDate = LocalDate.parse(startDateStr, DateTimeFormatter.BASIC_ISO_DATE);
                 LocalDate endDate = LocalDate.parse(endDateStr, DateTimeFormatter.BASIC_ISO_DATE);
 
-                diaryList = diaryService.findListByUserIdAndDate(pageable, userId, startDate, endDate);
+                diaryListWrapper = diaryService.findListByUserIdAndDate(pageable, userId, startDate, endDate);
             } else {
                 //검색 조건이 없을 때
-                diaryList = diaryService.findListByUserId(pageable, userId);
+                diaryListWrapper = diaryService.findListByUserId(pageable, userId);
             }
 
-            return ResponseEntity.ok(diaryList);
+            return ResponseEntity.ok(diaryListWrapper);
         } catch (Exception e) {
             throw new IllegalArgumentException("일기를 조회할 수 없습니다");
         }
