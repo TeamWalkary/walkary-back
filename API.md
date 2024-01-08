@@ -466,7 +466,7 @@ HTTP Status 500 – Internal Server Error [페이지]
 
 <br />
 
-## 핀 모아보기 API
+## 핀 모아보기 API(지도용)
 
 | TYPE |                  URL                  | TOKEN |
 | :--: | :-----------------------------------: | :---: |
@@ -544,6 +544,37 @@ HTTP Status 500 – Internal Server Error [페이지]
 {
     "pins": {}
 }
+```
+
+- 실패 403 Forbidden
+- 토큰 만료 혹은 부재
+
+- 실패 [500 Internal Sever Error]
+  서버 내부 오류
+
+## 핀 모아보기 API(일기용) 향후 수정 필요 !!!!
+
+| TYPE |                  URL                  | TOKEN |
+| :--: | :-----------------------------------: | :---: |
+| GET  | /apis/pin-----------------------: |   X   |
+
+### Request
+> 향후 수정 필요
+> 날짜 최신순은 LATEST, 오래된 순은 OLDEST로 지정
+> 디폴트 값은 OLDEST
+
+### Response
+
+- 핀 모아보기 성공 [200 OK]
+
+```json
+
+```
+
+- 핀 모아보기 조회 성공[200OK]
+값 없을 때
+```json
+
 ```
 
 - 실패 403 Forbidden
