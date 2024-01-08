@@ -373,13 +373,12 @@ HTTP Status 500 – Internal Server Error [페이지]
 ```json
 {
     "id": 619,
-    "contents": "수정된 컨텐츠",
-    "latitude": 123.1233,
-    "longitude": 23.22232
+    "contents": "수정된 컨텐츠"
 }
 
 ```
-핀ID, 수정된 컨텐츠, 위도, 경도
+핀ID, 수정된 컨텐츠
+변경점(24.1.8) 핀 수정 시 좌표 바꾸는 부분은 삭제
 
 ### Response
 
