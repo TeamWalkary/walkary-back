@@ -56,7 +56,7 @@ public class PointMapService {
 
     @Transactional
     public void edit(final PinEditRequests pinEditRequests) {
-        for (PinEditRequest request : pinEditRequests.requests()){
+        for (PinEditRequest request : pinEditRequests.pinList()){
             //핀 유무 확인
             PointMap pointMap = repository.findById(request.id()).orElseThrow(() -> new IllegalArgumentException("존재하지 않는 핀입니다"));
 
