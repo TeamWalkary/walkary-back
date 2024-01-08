@@ -1,5 +1,6 @@
 package com.walkary.models.dto.request.diary;
 
+import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -18,6 +19,7 @@ public class DiaryCreate {
 
     private String userId;
 
+    @Builder
     public DiaryCreate(LocalDate date, String title, String content, String image, String userId) {
         this.date = date;
         this.title = title;
