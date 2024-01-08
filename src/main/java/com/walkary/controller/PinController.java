@@ -43,7 +43,7 @@ public class PinController {
             HttpServletRequest httpRequest,
             @RequestBody PinEditRequest request
     ) {
-        pointMapService.edit(request.id(), request.contents(), new Point(request.longitude(), request.latitude()));
+        pointMapService.edit(request.id(), request.contents());
 
         return ResponseEntity.ok(
                 new MessageResponse("핀이 수정되었습니다.")

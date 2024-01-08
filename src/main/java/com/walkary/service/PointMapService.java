@@ -53,7 +53,7 @@ public class PointMapService {
     }
 
     @Transactional
-    public void edit(final Long id, final String content, final Point point) {
+    public void edit(final Long id, final String content) {
         //핀 유무 확인
         PointMap pointMap = repository.findById(id).orElseThrow(() -> new IllegalArgumentException("존재하지 않는 핀입니다"));
 
@@ -61,10 +61,6 @@ public class PointMapService {
 
         if (content != null && !content.equals("")) {
             editBuilder.content(content);
-        }
-
-        if (point != null) {
-            editBuilder.point(point);
         }
 
         pointMap.edit(editBuilder.build());
