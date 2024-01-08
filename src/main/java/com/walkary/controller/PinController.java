@@ -4,7 +4,7 @@ import com.walkary.config.security.security.jwt.JwtProvider;
 import com.walkary.models.SortType;
 import com.walkary.models.dto.MessageResponse;
 import com.walkary.models.dto.request.pin.PinCreateRequest;
-import com.walkary.models.dto.request.pin.PinEditRequest;
+import com.walkary.models.dto.request.pin.PinEditRequests;
 import com.walkary.models.dto.response.pin.AllMainPinsResponse;
 import com.walkary.service.PointMapService;
 import lombok.RequiredArgsConstructor;
@@ -41,9 +41,10 @@ public class PinController {
     @PreAuthorize("hasRole(ROLE_USER)")
     public ResponseEntity<MessageResponse> edit(
             HttpServletRequest httpRequest,
-            @RequestBody PinEditRequest request
+            @RequestBody PinEditRequests requests
     ) {
-        pointMapService.edit(request.id(), request.contents(), new Point(request.longitude(), request.latitude()));
+        pointMapService.edit(requests);
+
 
         return ResponseEntity.ok(
                 new MessageResponse("핀이 수정되었습니다.")

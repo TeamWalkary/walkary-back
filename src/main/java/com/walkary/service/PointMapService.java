@@ -1,6 +1,8 @@
 package com.walkary.service;
 
 import com.walkary.models.SortType;
+import com.walkary.models.dto.request.pin.PinEditRequest;
+import com.walkary.models.dto.request.pin.PinEditRequests;
 import com.walkary.models.dto.request.pin.PinEditor;
 import com.walkary.models.dto.response.pin.AllDatePinResponse;
 import com.walkary.models.dto.response.pin.AllMainPinsResponse;
@@ -53,22 +55,18 @@ public class PointMapService {
     }
 
     @Transactional
-    public void edit(final Long id, final String content, final Point point) {
-        //핀 유무 확인
-        PointMap pointMap = repository.findById(id).orElseThrow(() -> new IllegalArgumentException("존재하지 않는 핀입니다"));
+    public void edit(final PinEditRequests pinEditRequests) {
+        for (PinEditRequest request : pinEditRequests.pinList()){
+            //핀 유무 확인
+            PointMap pointMap = repository.findById(request.id()).orElseThrow(() -> new IllegalArgumentException("존재하지 않는 핀입니다"));
 
-        PinEditor.PinEditorBuilder editBuilder = pointMap.toEditor();
-
-        if (content != null && !content.equals("")) {
-            editBuilder.content(content);
+            // 변경이 필요한 경우에만 수정
+            if (request.contents() != null && !request.contents().equals("") && !request.contents().equals(pointMap.getContent())) {
+                PinEditor.PinEditorBuilder editBuilder = pointMap.toEditor();
+                editBuilder.content(request.contents());
+                pointMap.edit(editBuilder.build());
+            }
         }
-
-        if (point != null) {
-            editBuilder.point(point);
-        }
-
-        pointMap.edit(editBuilder.build());
-
     }
 
     @Transactional
