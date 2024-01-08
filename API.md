@@ -322,7 +322,7 @@ HTTP Status 500 – Internal Server Error [페이지]
 
 | TYPE |                  URL                  | TOKEN |
 | :--: | :-----------------------------------: | :---: |
-| POST  | /apis/main/maps-pin?date=yyyyMMdd&sortBy=LATEST-----------------------: |   X   |
+| GET  | /apis/main/maps-pin?date=yyyyMMdd&sortBy=LATEST-----------------------: |   X   |
 
 ### Request
 > 예시 : /apis/main/maps-pin?date=20231023&sortBy=LATEST
