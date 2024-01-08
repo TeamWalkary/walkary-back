@@ -372,13 +372,33 @@ HTTP Status 500 – Internal Server Error [페이지]
 ### Request
 ```json
 {
-    "id": 619,
-    "contents": "수정된 컨텐츠"
+    "requests": [
+        {
+            "id": 710,
+            "contents": "수정된 콘텐츠"
+        },
+        {
+            "id": 709,
+            "contents": "수정된 콘텐츠"
+
+        },
+        {
+            "id": 708,
+            "contents": "수정된 콘텐츠"
+        },
+        {
+            "id": 707,
+            "contents": "수정된 콘텐츠"
+        }
+    ]
 }
 
 ```
 핀ID, 수정된 컨텐츠
-변경점(24.1.8) 핀 수정 시 좌표 바꾸는 부분은 삭제
+변경점(24.1.8) 
+1. 핀 수정 시 좌표 바꾸는 부분은 삭제
+2. 단일이 아닌 벌크로 수정하도록 교체
+   꼭 requests를 붙여줘야 한다. List<>의 키 값이다.
 
 ### Response
 
