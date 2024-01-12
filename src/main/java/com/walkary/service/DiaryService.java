@@ -5,6 +5,7 @@ import com.walkary.models.dto.request.diary.DiaryCreate;
 import com.walkary.models.dto.request.diary.DiaryEdit;
 import com.walkary.models.dto.request.diary.DiaryEditor;
 import com.walkary.models.dto.response.diary.DiaryListResponse;
+import com.walkary.models.dto.response.diary.DiaryListWrapper;
 import com.walkary.models.dto.response.diary.DiaryResponse;
 import com.walkary.models.entity.Diary;
 import com.walkary.models.entity.DiaryMedia;
@@ -62,10 +63,14 @@ public class DiaryService {
 
     //일기 모아보기(검색 날짜 없음)
     @Transactional
-    public List<DiaryListResponse> findListByUserId(Pageable pageable, String userId) {
+    public DiaryListWrapper findListByUserId(Pageable pageable, String userId) {
         Page<DiaryWithAttachmentDTO> diaryPage = diaryRepository.findDiariesWithMediaByUserId(pageable, userId);
 
-        return diaryPage
+        // 다음 페이지가 있는지 확인(마지막 페이지인지 확인)
+        long total = diaryRepository.countDiariesByUserId(userId);
+        boolean hasNextPage = (long) pageable.getPageSize() * (pageable.getPageNumber() + 1) < total;
+
+        List<DiaryListResponse> diaries = diaryPage
                 .getContent()
                 .stream()
                 .map(diaryDto -> DiaryListResponse.builder()
@@ -76,14 +81,20 @@ public class DiaryService {
                         .image(diaryDto.getAttachment())
                         .build())
                 .collect(Collectors.toList());
+
+        return new DiaryListWrapper(hasNextPage, diaries);
     }
 
     //일기 모아보기(검색 날짜 유)
     @Transactional
-    public List<DiaryListResponse> findListByUserIdAndDate(Pageable pageable, String userId, LocalDate startDate, LocalDate endDate) {
+    public DiaryListWrapper findListByUserIdAndDate(Pageable pageable, String userId, LocalDate startDate, LocalDate endDate) {
         Page<DiaryWithAttachmentDTO> diaryPage = diaryRepository.findDiariesWithMediaByUserIdAndDate(pageable, userId, startDate, endDate);
 
-        return diaryPage
+        // 다음 페이지가 있는지 확인(마지막 페이지인지 확인)
+        long total = diaryRepository.countDiariesByUserIdAndDate(userId, startDate, endDate);
+        boolean hasNextPage = (long) pageable.getPageSize() * (pageable.getPageNumber() + 1) < total;
+
+        List<DiaryListResponse> diaries = diaryPage
                 .getContent()
                 .stream()
                 .map(diaryDto -> DiaryListResponse.builder()
@@ -94,6 +105,8 @@ public class DiaryService {
                         .image(diaryDto.getAttachment())
                         .build())
                 .collect(Collectors.toList());
+
+        return new DiaryListWrapper(hasNextPage, diaries);
     }
 
     @Transactional

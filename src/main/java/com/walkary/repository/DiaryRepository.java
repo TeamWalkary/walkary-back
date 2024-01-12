@@ -28,7 +28,10 @@ public interface DiaryRepository extends JpaRepository<Diary, Long> {
             "FROM Diary d LEFT JOIN d.diaryMedia dm " +
             "WHERE d.user.id = :userId ")
     Page<DiaryWithAttachmentDTO> findDiariesWithMediaByUserId(Pageable pageable, @Param("userId") String userId);
-    
+
+    //일기모아보기(검색 날짜 X)용 일기 Count 쿼리
+    long countDiariesByUserId(String userId);
+
     //일기모아보기(검색 날짜 있음)
     @Query("SELECT NEW com.walkary.models.dto.DiaryWithAttachmentDTO(d.id, d.date, d.title, d.content, dm.attachment) " +
             "FROM Diary d LEFT JOIN d.diaryMedia dm " +
@@ -40,10 +43,19 @@ public interface DiaryRepository extends JpaRepository<Diary, Long> {
     //그 날짜에 일기 데이터 있는지 확인
     boolean existsByDateAndUserId(LocalDate date, String userId);
 
+    //일기모아보기(검색 날짜 O)용 일기 Count 쿼리
+    @Query("SELECT COUNT(d) " +
+            "FROM Diary d " +
+            "WHERE d.user.id = :userId " +
+            "AND (:startDate IS NULL OR d.date >= :startDate) " +
+            "AND (:endDate IS NULL OR d.date <= :endDate)")
+    long countDiariesByUserIdAndDate(@Param("userId") String userId, @Param("startDate") LocalDate startDate, @Param("endDate") LocalDate endDate);
+
+
+    //달력 핀 유무 확인용
     @Query("SELECT DAY(d.date) FROM Diary d " +
             "WHERE YEAR(d.date) = :year " +
             "AND MONTH(d.date) = :month " +
             "AND user_id=:userId")
     List<Integer> findByMonth(@Param("year") int year, @Param("month") int month, String userId);
-
 }
