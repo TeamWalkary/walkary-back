@@ -168,7 +168,7 @@ login success
 - 조회 실패(일기 부재 시) [200 OK]
 ``` json
 {
-    "message": "일기를 작성해주세요"
+    "message": "존재하지 않는 글입니다"
 }
 ```
 
