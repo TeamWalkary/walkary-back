@@ -1,5 +1,6 @@
 package com.walkary.service;
 
+import com.walkary.exception.diary.DiaryNotFoundException;
 import com.walkary.models.dto.DiaryWithAttachmentDTO;
 import com.walkary.models.dto.request.diary.DiaryCreate;
 import com.walkary.models.dto.request.diary.DiaryEdit;
@@ -151,11 +152,7 @@ public class DiaryService {
 
     public DiaryResponse findDiaryByDate(String userId, LocalDate date) {
         Diary diary = diaryRepository.findByDateAndUserId(userId, date)
-                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 글입니다"));
-
-        if (diary == null) {
-            return DiaryResponse.builder().build();
-        }
+                .orElseThrow(() -> new DiaryNotFoundException());
 
         DiaryMedia diaryMedia = diaryMediaRepository.findByDiaryId(diary.getId()).orElse(null);
 
